@@ -1,6 +1,8 @@
 import { SearchInput } from './../../components/SearchInput'
 import { StyledHome } from './styles';
 import { getByName } from '../../services/Summoners'
+//import {} from '../src/index.js'
+
 export function Home() {
   const servers = [
     { label: 'BR1', value: 'br1' },
@@ -16,12 +18,11 @@ export function Home() {
     { label: 'RU', value: 'ru' },
   ]
 
-  getByName('Haus of Dereon');
+  
 
   return (
     <StyledHome>
-      sdsd
-      <SearchInput servers={servers} label="Digite o seu ID" searchAction={console.log} />
+      <SearchInput servers={servers} label="Digite o seu Riot ID" searchAction={getByName} />
     </StyledHome>
   );
 }

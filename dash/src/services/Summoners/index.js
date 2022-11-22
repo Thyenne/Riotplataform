@@ -1,7 +1,7 @@
-import { RIOTapi } from "../RIOTapi";
+import { selfApi } from "../selfApi"
 
-const getByName = async (name) => {
-  return await RIOTapi().get(`/lol/summoner/v4/summoners/by-name/${name}`)
+const getByName = async ({ server, name }) => {
+  return await selfApi.get(`/${server}/summoner/${name}`)
 }
 
 export { getByName }

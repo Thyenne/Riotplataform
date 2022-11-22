@@ -17,9 +17,7 @@ function App() {
       <Router>
         <div className="App">
           <Header menuList={[
-            {label: 'Home'},
-            {label: 'Home2'},
-            {label: 'Home3'},
+            {label: 'Home'}
           ]} />
         </div>
         <Routes>

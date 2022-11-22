@@ -34,7 +34,7 @@ const Header = ({ menuList }) => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Riot Dashboard
+            Riot Tracker
           </Typography>
           {
             menuList.map((item, index) => (

@@ -2,22 +2,30 @@
 //import get_json_type_game from type.js 
 
 const express = require("express")
+const cors = require('cors')
 const app = express()
 
 const { json } = require("express")
 
 const appLol= require("./requisicoes_lol.js")
 
+app.use(cors())
 app.listen(3500)
 app.use(json())
+
+
 
 /*
     Função principal
     Input:
     Output:
     */
-async function main(){
+ async function main(){
     //Função de chamada para o front
+
+//thyenne includes
+ //   const getByName = async ()
+
 
     //Função try catch para endpoint da página Summoner
     try{
