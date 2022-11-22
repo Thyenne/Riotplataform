@@ -43,9 +43,7 @@ Output: id do jogador
 */
 async function get_id_summoner(summoner_name,region)
 {
-    //region = data.region
     key = data.riotKey
-    //summoner_name = data.summoner_name
     id_URL = data.puuid_URL
 
     if (region == "")
