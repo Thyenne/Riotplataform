@@ -1,6 +1,6 @@
 import { SearchInput } from './../../components/SearchInput'
 import { StyledHome } from './styles';
-import { getByName } from '../../services/Summoners'
+import { getByName, getFromRiot } from '../../services/Summoners'
 //import {} from '../src/index.js'
 
 export function Home() {
@@ -22,7 +22,7 @@ export function Home() {
 
   return (
     <StyledHome>
-      <SearchInput servers={servers} label="Digite o seu Riot ID" searchAction={getByName} />
+      <SearchInput servers={servers} label="Digite o seu Riot ID" searchAction={getFromRiot} />
     </StyledHome>
   );
 }
