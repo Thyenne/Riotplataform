@@ -95,7 +95,7 @@ async function get_list_match(summonerName, region)
     const url = "https://" + data.default_continent + 
     ".api.riotgames.com/lol/match/v5/matches/by-puuid/" + 
     puuid + "/ids?start=" + "0" + "&count=" + "20"
-    
+
     const matchIdResponde = await axios.get(url , { headers : { "X-Riot-Token": key} })
     
     
@@ -114,7 +114,8 @@ Output: Dados de uma partida
 async function get_match_data_participants(partida)
 {
     key = data.riotKey
-    const api_match_url = "https://" + data.default_continent + data.match_URL + partida + "?api_key=" + key
+    const api_match_url = "https://" + data.default_continent + 
+    data.match_URL + partida + "?api_key=" + key
 
     const matchData = await axios.get(api_match_url, { headers : { "X-Riot-Token": key} })
     return matchData.data
