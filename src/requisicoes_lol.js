@@ -68,11 +68,10 @@ Output: Id do Jogador
 */
 async function get_puuid(summoner_name, region)
 {
-    //region = data.region
+    
     riotURL = data.puuid_URL
     key = data.riotKey
-    //summoner_name = data.summoner_name
-
+    
     if(region == "")
         region = data.default_region
     
