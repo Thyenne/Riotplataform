@@ -1,0 +1,17 @@
+{
+        "riotKey": "RGAPI-454f72a2-b7da-4e43-905f-22a4a81319ef",
+        "description": "Developer Riot Key to acess APIs",
+        "notes": null,
+        "region" : "",
+        "match_URL" : ".api.riotgames.com/lol/match/v5/matches/",
+        "puuid_URL" : ".api.riotgames.com/lol/summoner/v4/summoners/by-name/",
+        "league_URL": ".api.riotgames.com/lol/league/v4/entries/by-summoner/",
+        "default_region" : "br1",
+        "default_continent": "americas",
+        "summoner_URL" : ".api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-summoner/",
+        "profile_Icon": "http://ddragon.leagueoflegends.com/cdn/12.22.1/img/profileicon/",
+        "champion_Icon": "http://ddragon.leagueoflegends.com/cdn/12.22.1/img/champion/",
+        "runas_Icon": "http://ddragon.leagueoflegends.com/cdn/img/",
+        "item_Icon": "http://ddragon.leagueoflegends.com/cdn/12.22.1/img/item/",
+        "spells_Icon": "http://ddragon.leagueoflegends.com/cdn/12.22.1/img/spell/"
+}

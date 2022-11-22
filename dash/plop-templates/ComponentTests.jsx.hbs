@@ -1,0 +1,15 @@
+import '@testing-library/jest-dom/extend-expect';
+import { screen } from '@testing-library/react';
+import * as React from 'react';
+import { renderWithTheme } from 'utils/renderWithTemplate';
+import { {{pascalCase name}} } from '.';
+
+describe('<{{pascalCase name}} />', () => {
+  it('should mount', () => {
+    renderWithTheme(<{{pascalCase name}}>Lorem ipsum</{{pascalCase name}}>);
+    
+    const {{lowerCase name}}Content = screen.getByText('Lorem ipsum')
+
+    expect({{lowerCase name}}Content).toBeInTheDocument();
+  });
+});
