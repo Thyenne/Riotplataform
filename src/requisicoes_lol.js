@@ -364,7 +364,8 @@ async function get_top_champions(id_jogador, region)
         championLevelMaestry: champions.championLevel,
         championPoints: champions.championPoints,
         nextLevel: champions.championPointsUntilNextLevel,
-        bau: champions.chestGranted
+        bau: champions.chestGranted,
+        championIcon: data.champion_Icon + get_name_champion(champions.championId) + ".png"
     }))
     
     return listaSummoner
