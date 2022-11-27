@@ -20,6 +20,36 @@ app.use(json())
     Input:
     Output:
     */
+app.get('/:region/summoner/:summonerName', async (req, res) => {
+    try {
+        const {summonerName, region} = req.params
+            
+				const summonerData = await appLol.getSummonerData(summonerName,region)
+				const profileIcon = summonerData.profileIcon
+				const listMatch = await appLol.get_list_match(summonerData.puuid)
+				const championList = await appLol.getNameListChampion()
+				
+				// const dataMatchSummoner = await appLol.get_name_historic(summonerName,region, listMatch)
+
+				// const historic = await appLol.get_historic(summonerName,region,0)
+
+				const id_player = summonerData.id_summoner
+				
+				const champions = await appLol.get_top_champions(id_player, region, championList)
+				
+				const ranked_summoner = await appLol.get_ranked_summoner(id_player, region)
+				
+				
+				return res.status(200).json({
+					profileIcon,
+					summonerName: summonerData.name,
+					ranked_summoner,
+					listMatch
+				})
+    } catch (error) {
+			return res.status(418).json(error)
+    }
+})
  async function main(){
     //Função de chamada para o front
 
@@ -28,35 +58,7 @@ app.use(json())
 
 
     //Função try catch para endpoint da página Summoner
-    try{
-
-        app.get('/:region/summoner/:summonerName', async (req,res) => { 
-            const {summonerName} = req.params
-            const {region} = req.params
-            
-            const profileIcon = await appLol.get_profile_icon(summonerName,region)
-
-            const list_match = await appLol.get_list_match(summonerName, region)    
-            
-            const data_match_summoner = await appLol.get_name_historic(summonerName,region)
-
-            //const historic = await appLol.get_historic(summonerName,region,0)
-
-            const id_player = await appLol.get_id_summoner(summonerName, region)
-            
-            //const champions = await appLol.get_top_champions(id_player, region)
-            
-            const ranked_summoner = await appLol.get_ranked_summoner(id_player, region)
-            
-            
-            return res.json({profileIcon,list_match,ranked_summoner,data_match_summoner})
-            
-        })
-    }
-    catch(err) //Função catch para erro no console
-    {
-            console.log("Error Log: " + err) 
-    }  
+    
     
     //Função try catch para endpoint da página Match
     try{

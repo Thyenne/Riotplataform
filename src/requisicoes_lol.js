@@ -8,31 +8,43 @@ const runas = require('..\\json\\runas.json')
 const spells = require('..\\json\\spells.json')
 const item = require('..\\json\\item.json')
 
+const { riotKey, puuid_URL, profile_Icon, default_region} = data
 /*
 Função que retorna o ícone de perfil do jogador
 Input: 
 Output: URL do ícone de perfil do jogador
 */
-async function get_profile_icon(summoner_name, region)
-{
-    //region = data.region
-    key = data.riotKey
-    //summoner_name = data.summoner_name
-    id_URL = data.puuid_URL
-    icon = data.profile_Icon
+// async function get_profile_icon(summoner_name, region)
+// {
+// 	const server = region ?? default_region
+// 	const url = `https://${server}${puuid_URL}${summoner_name}`
 
-    if (region == "")
-    {
-        region = data.default_region
-    }
+// 	const list_summoner = await axios.get(url, { headers : {"X-Riot-Token": riotKey} })
+// 		.then(res => {
+// 			const profileIcon = `${profile_Icon}${res.data.profileIconId}.png`
+// 			console.log(res.data)
+// 			return profileIcon
+// 		})
 
-    url = "https://" + region + id_URL + summoner_name
+// 	return list_summoner
+// }
 
-    const list_summoner = await axios.get(url, { headers : {"X-Riot-Token": key} })
+async function getSummonerData(summoner_name, region) {
+	const server = region ?? default_region
+	const url = `https://${server}${puuid_URL}${summoner_name}`
 
-    const profile_icon = icon + list_summoner.data.profileIconId + ".png"
-    
-    return profile_icon
+	const list_summoner = await axios.get(url, { headers : {"X-Riot-Token": riotKey} })
+		.then(res => ({
+			...res.data,
+			profileIcon: `${profile_Icon}${res.data.profileIconId}.png`,
+			id_summoner: res.data.id,
+			puuid: res.data.puuid
+			// const profileIcon = `${profile_Icon}${res.data.profileIconId}.png`
+			// console.log(res.data)
+			// return profileIcon
+		}))
+
+	return list_summoner
 }
 
 
@@ -41,24 +53,24 @@ Função que retorna o id do jogador (summonerId)
 Input: 
 Output: id do jogador
 */
-async function get_id_summoner(summoner_name,region)
-{
-    key = data.riotKey
-    id_URL = data.puuid_URL
+// async function get_id_summoner(summoner_name,region)
+// {
+//     key = data.riotKey
+//     id_URL = data.puuid_URL
 
-    if (region == "")
-    {
-        region = data.default_region
-    }
+//     if (region == "")
+//     {
+//         region = data.default_region
+//     }
 
-    url = "https://" + region + id_URL + summoner_name
+//     url = "https://" + region + id_URL + summoner_name
 
-    const list_summoner = await axios.get(url, { headers : {"X-Riot-Token": key} })
+//     const list_summoner = await axios.get(url, { headers : {"X-Riot-Token": key} })
 
-    const id_summoner = list_summoner.data.id
+//     const id_summoner = list_summoner.data.id
     
-    return id_summoner
-}
+//     return id_summoner
+// }
 
 
 /*
@@ -88,17 +100,14 @@ Função que pega da API Summoners uma lista de partidas de um jogador
 Input:
 Output: Lista de partidas de um jogador
 */
-async function get_list_match(summonerName, region)
+async function get_list_match(puuid)
 {
-    const puuid =await get_puuid(summonerName, region)
     const key = data.riotKey
     const url = "https://" + data.default_continent + 
     ".api.riotgames.com/lol/match/v5/matches/by-puuid/" + 
     puuid + "/ids?start=" + "0" + "&count=" + "20"
 
     const matchIdResponde = await axios.get(url , { headers : { "X-Riot-Token": key} })
-    
-    
     const result = matchIdResponde.data
     
     return result
@@ -282,11 +291,8 @@ Função que retorna dados filtrados de uma partida do jogador
 Input: Nome do jogador e número da partida na lista de partidas
 Output: Mini histórico do jogador da partida solicitada
 */
-async function get_name_historic(summ_name, region)
+async function get_name_historic(summ_name, region, listajogo)
 {  
-    
-
-    const listajogo = await get_list_match(summ_name,region)
     var listap = []
     
 
@@ -322,51 +328,67 @@ Função que retorna uma lista de maestria de cada campeão por jogador
 Input: id do jogador
 Output: lista de campeões e maestrias
 */
-async function get_top_champions(id_jogador, region)
+async function getNameListChampion() {
+	const listChampion = await axios.get('http://ddragon.leagueoflegends.com/cdn/12.22.1/data/en_US/champion.json')
+      .then(res => {
+				const { data } = res.data
+        const listaNomes = Object.keys(data)
+				const listaDados = Object.values(data).map(dado => dado.key)
+				const listaMerge = listaNomes.map((champion, index) => ({
+					name: champion,
+					key: parseInt(listaDados[index])
+				}))
+        return listaMerge
+      })
+	return listChampion
+}
+
+async function get_name_champion(sumres)
 {
-    //region = data.region
-    key = data.riotKey
-    summonerURL = data.summoner_URL
-    summonerID = id_jogador
-    
-    if (region == "")
-    {
-        region = data.default_region
-    }
+		let j
+		const list_champion = Object.keys(campeoes.data)
+		const l = await axios.get('http://ddragon.leagueoflegends.com/cdn/12.22.1/data/en_US/champion.json')
+      .then(res => {
+				const { data } = res.data
+        const lista = Object.keys(data)
+        return lista
+      })
+		
+		// const championList = list_champion.filter(champion => Object.keys(champ))
+		for(j=0; j < list_champion.length; j++){
+			if (campeoes.data[Object.keys(campeoes.data)[j]].key == sumres) {
+				console.log(Object.keys(campeoes.data)[j])
+				console.log(campeoes.data.Quinn.key)
+				return list_champion[j] 
+			}
+		}  
+}
 
-    url = "https://" + region + summonerURL + summonerID
+async function get_top_champions(id_jogador, region, listaChampions)
+{
+    
+    const summonerURL = data.summoner_URL
+    const server = region ?? default_region
+    
 
-    const summonerResponde = await axios.get(url , { headers : { "X-Riot-Token": key} })
-    
-    /*
-    Função que retorna o nome do campeão baseado em um json separado
-    Input: lista de top campeões
-    Output: o nome do campeão baseado na ID
-    */
-    function get_name_champion(sumres)
-    {
-        let j
-        const list_champion = Object.keys(campeoes.data)
-        
-        for(j=0; j < list_champion.length; j++){
-            if (campeoes.data[Object.keys(campeoes.data)[j]].key == sumres)
-            {
-                    return list_champion[j] 
-            }
-        }  
-    }
-    
-    
-    const listaSummoner = summonerResponde.data.map((champions) => ({
-    
-        championName: get_name_champion(champions.championId),
-        championsId: champions.championId,
-        championLevelMaestry: champions.championLevel,
-        championPoints: champions.championPoints,
-        nextLevel: champions.championPointsUntilNextLevel,
-        bau: champions.chestGranted,
-        championIcon: data.champion_Icon + get_name_champion(champions.championId) + ".png"
-    }))
+    url = "https://" + server + summonerURL + id_jogador
+
+    const summonerResponde = await axios.get(url , { headers : { "X-Riot-Token": riotKey } })
+
+		const listaSummoner = summonerResponde.data.map((champions) => {
+				const championName = listaChampions.filter(champion => champion.key == champions.championId)[0].name
+        const objData = {
+					championName,
+					championsId: champions.championId,
+					championLevelMaestry: champions.championLevel,
+					championPoints: champions.championPoints,
+					nextLevel: champions.championPointsUntilNextLevel,
+					bau: champions.chestGranted,
+					championIcon: data.champion_Icon + championName + ".png"
+				}
+
+				return objData
+    })
     
     return listaSummoner
 }
@@ -417,10 +439,12 @@ module.exports = {
     get_list_match,
     get_match_data_participants,
     get_historic,
-    get_id_summoner,
+    // get_id_summoner,
     get_puuid,
     get_ranked_summoner,
     get_top_champions,
     get_name_historic,
-    get_profile_icon
+    // get_profile_icon,
+		getSummonerData,
+		getNameListChampion
     };
