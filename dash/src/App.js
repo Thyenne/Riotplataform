@@ -9,25 +9,30 @@ import GlobalStyle from './utils/globalStyle';
 import { theme } from './utils/theme';
 
 import { Home } from './pages/Home';
+import { Dashboard } from './pages/Dashboard';
+import { AuthContextProvider } from './contexts';
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
-      <Router>
-        <div className="App">
-          <Header menuList={[
-            {label: 'Home'}
-          ]} />
-        </div>
-        <Routes>
-          <Route index element={<Home />} />
-          {/* <Route path="/cadastro-positivo" element={<Cadastro />}>
-            <Route path="comunicacao" element={<Comunicacao />} />
-          </Route> */}
+      <AuthContextProvider>
+        <Router>
+          <div className="App">
+            <Header menuList={[
+              {label: 'Home'}
+            ]} />
+          </div>
+          <Routes>
+            <Route index element={<Home />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            {/* <Route path="/cadastro-positivo" element={<Cadastro />}>
+              <Route path="comunicacao" element={<Comunicacao />} />
+            </Route> */}
 
-        </Routes>
-      </Router>
+          </Routes>
+        </Router>
+      </AuthContextProvider>
     </ThemeProvider>
   );
 }
