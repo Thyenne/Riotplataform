@@ -110,18 +110,20 @@ async function main(){
             const {summonerName, region} = req.params   
             
             //const id_player = await appLol.get_id_summoner(summonerName, region)
-            //const summonerData = await appLol.getSummonerData(summonerName,region)
+            const summonerData = await appLol.getSummonerData(summonerName,region)
             //const championsName = await appLol.getNameListChampion()
-            const championsData = await appLol.get_top_champions('C556tQkDD__40Y29wYAH0HGQ8TNQ0eLKq3uOJ8Bywzl1jQ', 'br1')
-
+            const championsData = await appLol.get_top_champions(summonerData.id, region)
+        
+            
             return res.status(200).json({
                 championsData
             })
+            
         }
         //Função catch para erro no console
         catch(error){
              
-        return res.status(418).json(error) 
+        console.log(error) 
         }
 
     })
