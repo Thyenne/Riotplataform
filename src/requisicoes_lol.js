@@ -8,7 +8,7 @@ const runas = require('..\\json\\runas.json')
 const spells = require('..\\json\\spells.json')
 const item = require('..\\json\\item.json')
 
-const { riotKey, puuid_URL, profile_Icon, default_region, default_continent, match_URL} = data
+const { riotKey, puuid_URL, profile_Icon, default_region, default_continent, match_URL, league_URL, summoner_URL} = data
 /*
 Função que retorna o ícone de perfil do jogador
 Input: 
@@ -49,19 +49,11 @@ Output: lista de ranqueada do jogador (solo/duo e flex)
 */
 async function get_ranked_summoner(id_jogador, region)
 {
-    key = data.riotKey
-    summonerId = id_jogador
-    //region = data.region
-    ranked_URL = data.league_URL
+    const server = region ?? default_region
 
-    if (region == "")
-    {
-        region = data.default_region
-    }
+    url = "https://" + server + league_URL + id_jogador
 
-    url = "https://" + region + ranked_URL + summonerId
-
-    const list_ranked = await axios.get(url, { headers: {"X-Riot-Token": key} })
+    const list_ranked = await axios.get(url, { headers: {"X-Riot-Token": riotKey} })
 
     if(list_ranked == ''){
         x = "Dados não disponíveis"
@@ -154,7 +146,7 @@ Função que pega dados de uma só partida
 Input: Lista de partidas
 Output: Dados de uma partida 
 */
-async function get_match_data_participants(partida)
+async function get_match_data_participants(continent, partida)
 {
     const server = continent ?? default_continent
 
@@ -163,6 +155,7 @@ async function get_match_data_participants(partida)
 
     const matchData = await axios.get(api_match_url, { headers : { "X-Riot-Token": riotKey} })
     return matchData.data
+    //return api_match_url
 }
 
 
@@ -201,10 +194,11 @@ Função que retorna dados filtrados de todos os jogadores de uma partida
 Input: Número da partida da lista de partidas
 Output: Histórico de uma partida
 */
-async function get_historic(summoner_name,region,i)
+async function get_historic(puuid, continent,i)
 {
-    const listajogo = await get_list_match(summoner_name,region)
-    const match_data = await get_match_data_participants(listajogo[listajogo.findIndex(j => j === i)])
+    
+    const listajogo = await get_list_match(puuid,continent)
+    const match_data = await get_match_data_participants(continent, listajogo[listajogo.findIndex(j => j === i)])
     
     const match_data_participants = match_data.info.participants
 
@@ -315,9 +309,9 @@ async function get_historic(summoner_name,region,i)
         championIcon: data.champion_Icon + participante.championName + ".png"
         
     }));
-
-    return [gameDuration, listaParticipantes]
     
+    return [gameDuration, listaParticipantes]
+    //return match_data
 }
 
 
@@ -326,19 +320,20 @@ Função que retorna dados filtrados de uma partida do jogador
 Input: Nome do jogador e número da partida na lista de partidas
 Output: Mini histórico do jogador da partida solicitada
 */
-async function get_summoner_historic(summ_name, region, listajogo)
+async function get_summoner_historic(puuid, summonerName, continent)
 {  
     var listap = []
     
+    const listajogo = await get_list_match(puuid, continent)
 
     for (var k = 0; k < listajogo.length; k++)
     {
-        const match_data = await get_match_data_participants(listajogo[k])
+        const match_data = await get_match_data_participants(continent, listajogo[k])
         const match_data_participants = match_data.info.participants
         
         for (var jk = 0; jk < match_data_participants.length; jk++)
         {
-            if (summ_name == match_data_participants[jk].summonerName){
+            if (summonerName == match_data_participants[jk].summonerName){
                 let meu_participante = {
                 "typegame": get_type_game(match_data),
                 "kills": match_data_participants[jk].kills,
@@ -356,6 +351,10 @@ async function get_summoner_historic(summ_name, region, listajogo)
     }
     return listap
 }
+
+
+
+
 
 
 /*
@@ -392,40 +391,38 @@ async function get_name_champion(sumres)
 		// const championList = list_champion.filter(champion => Object.keys(champ))
 		for(j=0; j < list_champion.length; j++){
 			if (campeoes.data[Object.keys(campeoes.data)[j]].key == sumres) {
-				console.log(Object.keys(campeoes.data)[j])
-				console.log(campeoes.data.Quinn.key)
+				//console.log(Object.keys(campeoes.data)[j])
+				//console.log(campeoes.data.Quinn.key)
 				return list_champion[j] 
 			}
 		}  
 }
 
-async function get_top_champions(id_jogador, region, listaChampions)
+async function get_top_champions(id_jogador, region)
 {
     
-    const summonerURL = data.summoner_URL
     const server = region ?? default_region
     
+    const url = "https://" + server + summoner_URL + id_jogador
+                              //await axios.get(url , { headers : { "X-Riot-Token": riotKey} })
+    const summonerChampions = await axios.get(url , { headers : { "X-Riot-Token": riotKey} })
+    /*
+	const listaSummoner = summonerChampions.data.map((champions) => {
+	const championName = listaChampions.filter(champion => champion.key == champions.championId)[0].name
+    const objData = {
+				championName,
+				championsId: champions.championId,
+				championLevelMaestry: champions.championLevel,
+				championPoints: champions.championPoints,
+				nextLevel: champions.championPointsUntilNextLevel,
+				bau: champions.chestGranted,
+				championIcon: data.champion_Icon + championName + ".png"
+			}
 
-    url = "https://" + server + summonerURL + id_jogador
-
-    const summonerResponde = await axios.get(url , { headers : { "X-Riot-Token": riotKey } })
-
-		const listaSummoner = summonerResponde.data.map((champions) => {
-				const championName = listaChampions.filter(champion => champion.key == champions.championId)[0].name
-        const objData = {
-					championName,
-					championsId: champions.championId,
-					championLevelMaestry: champions.championLevel,
-					championPoints: champions.championPoints,
-					nextLevel: champions.championPointsUntilNextLevel,
-					bau: champions.chestGranted,
-					championIcon: data.champion_Icon + championName + ".png"
-				}
-
-				return objData
-    })
-    
-    return listaSummoner
+	return objData
+})
+    */
+    return summonerChampions
 }
 
 
@@ -442,6 +439,7 @@ module.exports = {
     get_top_champions,
     get_summoner_historic,
     // get_profile_icon,
+    get_name_champion,
 	getSummonerData,
 	getNameListChampion
     };

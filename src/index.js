@@ -56,10 +56,10 @@ async function main(){
             const {summonerName, region, continent} = req.params
             
             const summonerData = await appLol.getSummonerData(summonerName, region)
-            const listMatch = await appLol.get_list_match(summonerData.puuid, continent)
-
+            
+            const summoner_historic = await appLol.get_summoner_historic(summonerData.puuid, summonerData.name, continent)
             return res.status(200).json({
-                listMatch
+                summoner_historic
             })
         } catch (error){
             return res.status(418).json(error)
@@ -76,45 +76,54 @@ async function main(){
 
     //Função try catch para endpoint da página Summoner
     
-   /* 
+    
     //Função try catch para endpoint da página Match
-    try{
+    
         //Função de try catch para todas as variaveis que importam funções do modulo de requisições
 
-        app.get('/:region/:summonerName/match/:matchId', async (req,res) => { 
-            const {summonerName} = req.params
-            const {region} = req.params    
-            const {matchId} = req.params
+    app.get('/:continent/:region/:summonerName/match/:matchId', async (req,res) => { 
+        try{  
+            const {summonerName, continent, region, matchId} = req.params
+           
+            const summonerData = await appLol.getSummonerData(summonerName,region)  
             
-            const historic = await appLol.get_historic(summonerName,region,matchId)
+            const historic = await appLol.get_historic(summonerData.puuid,continent,matchId)
 
-            return res.json(historic)
-        })
-    }
-    catch(err) //Função catch para erro no console
-    {
-            console.log("Error Log: " + err) 
-    } 
+            return res.status(200).json({
+                historic
+            })
+        }
+    
+        catch(error) //Função catch para erro no console
+        {
+            return res.status(418).json(error) 
+        } 
+    })
+
 
     //Função try catch para endpoint da página Champions
-    try{
+    
         //Função de try catch para todas as variaveis que importam funções do modulo de requisições
 
-        app.get('/:region/:summonerName/champions', async (req,res) => { 
-            const {summonerName} = req.params
-            const {region} = req.params    
+    app.get('/:region/:summonerName/champions', async (req,res) => { 
+        try{
+            const {summonerName, region} = req.params   
             
-            const id_player = await appLol.get_id_summoner(summonerName, region)
-            const champions = await appLol.get_top_champions(id_player, region)
+            //const id_player = await appLol.get_id_summoner(summonerName, region)
+            //const summonerData = await appLol.getSummonerData(summonerName,region)
+            //const championsName = await appLol.getNameListChampion()
+            const championsData = await appLol.get_top_champions('C556tQkDD__40Y29wYAH0HGQ8TNQ0eLKq3uOJ8Bywzl1jQ', 'br1')
 
-            return res.json(champions)
-        })
-    }
-    catch(err) //Função catch para erro no console
-    {
-            console.log("Error Log: " + err) 
-    }
-*/
+            return res.status(200).json({
+                championsData
+            })
+        }
+        //Função catch para erro no console
+        catch(error){
+             
+        return res.status(418).json(error) 
+        }
+
+    })
 }
-
 main() //Chamada da função main
