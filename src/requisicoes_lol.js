@@ -8,7 +8,7 @@ const runas = require('..\\json\\runas.json')
 const spells = require('..\\json\\spells.json')
 const item = require('..\\json\\item.json')
 
-const { riotKey, puuid_URL, profile_Icon, default_region} = data
+const { riotKey, puuid_URL, profile_Icon, default_region, default_continent, match_URL} = data
 /*
 Função que retorna o ícone de perfil do jogador
 Input: 
@@ -37,16 +37,50 @@ async function getSummonerData(summoner_name, region) {
 		.then(res => ({
 			...res.data,
 			profileIcon: `${profile_Icon}${res.data.profileIconId}.png`,
-			id_summoner: res.data.id,
-			puuid: res.data.puuid
-			// const profileIcon = `${profile_Icon}${res.data.profileIconId}.png`
-			// console.log(res.data)
-			// return profileIcon
 		}))
-
+    
 	return list_summoner
 }
 
+/*
+Função que retorna os dados da ranqueada do jogador
+Input: id do jogador
+Output: lista de ranqueada do jogador (solo/duo e flex)
+*/
+async function get_ranked_summoner(id_jogador, region)
+{
+    key = data.riotKey
+    summonerId = id_jogador
+    //region = data.region
+    ranked_URL = data.league_URL
+
+    if (region == "")
+    {
+        region = data.default_region
+    }
+
+    url = "https://" + region + ranked_URL + summonerId
+
+    const list_ranked = await axios.get(url, { headers: {"X-Riot-Token": key} })
+
+    if(list_ranked == ''){
+        x = "Dados não disponíveis"
+        return x
+    }
+    else{
+        const ranked_summoner = list_ranked.data.map((ranked) => ({
+            typeGame: ranked.queueType,
+            tier: ranked.tier,
+            summonerName: ranked.summonerName,
+            points: ranked.leaguePoints,
+            wins: ranked.wins,
+            losses: ranked.losses,
+            winRate: ((ranked.wins / (ranked.wins + ranked.losses)) * 100).toFixed(1)
+        }))
+    
+    return ranked_summoner
+    }
+}
 
 /*
 Função que retorna o id do jogador (summonerId)
@@ -72,13 +106,13 @@ Output: id do jogador
 //     return id_summoner
 // }
 
-
+/*
 /*
 Função que pega a puuid do Jogador
 Input:
 Output: Id do Jogador
 */
-async function get_puuid(summoner_name, region)
+/*async function get_puuid(summoner_name, region)
 {
     
     riotURL = data.puuid_URL
@@ -100,14 +134,14 @@ Função que pega da API Summoners uma lista de partidas de um jogador
 Input:
 Output: Lista de partidas de um jogador
 */
-async function get_list_match(puuid)
+async function get_list_match(puuid,continent)
 {
-    const key = data.riotKey
-    const url = "https://" + data.default_continent + 
+    const server = continent ?? default_continent
+    const url = "https://" + server + 
     ".api.riotgames.com/lol/match/v5/matches/by-puuid/" + 
     puuid + "/ids?start=" + "0" + "&count=" + "20"
 
-    const matchIdResponde = await axios.get(url , { headers : { "X-Riot-Token": key} })
+    const matchIdResponde = await axios.get(url , { headers : { "X-Riot-Token": riotKey} })
     const result = matchIdResponde.data
     
     return result
@@ -122,11 +156,12 @@ Output: Dados de uma partida
 */
 async function get_match_data_participants(partida)
 {
-    key = data.riotKey
-    const api_match_url = "https://" + data.default_continent + 
-    data.match_URL + partida + "?api_key=" + key
+    const server = continent ?? default_continent
 
-    const matchData = await axios.get(api_match_url, { headers : { "X-Riot-Token": key} })
+    const api_match_url = "https://" + server + 
+    match_URL + partida
+
+    const matchData = await axios.get(api_match_url, { headers : { "X-Riot-Token": riotKey} })
     return matchData.data
 }
 
@@ -291,7 +326,7 @@ Função que retorna dados filtrados de uma partida do jogador
 Input: Nome do jogador e número da partida na lista de partidas
 Output: Mini histórico do jogador da partida solicitada
 */
-async function get_name_historic(summ_name, region, listajogo)
+async function get_summoner_historic(summ_name, region, listajogo)
 {  
     var listap = []
     
@@ -394,45 +429,7 @@ async function get_top_champions(id_jogador, region, listaChampions)
 }
 
 
-/*
-Função que retorna os dados da ranqueada do jogador
-Input: id do jogador
-Output: lista de ranqueada do jogador (solo/duo e flex)
-*/
-async function get_ranked_summoner(id_jogador, region)
-{
-    key = data.riotKey
-    summonerId = id_jogador
-    //region = data.region
-    ranked_URL = data.league_URL
 
-    if (region == "")
-    {
-        region = data.default_region
-    }
-
-    url = "https://" + region + ranked_URL + summonerId
-
-    const list_ranked = await axios.get(url, { headers: {"X-Riot-Token": key} })
-
-    if(list_ranked == ''){
-        x = "Dados não disponíveis"
-        return x
-    }
-    else{
-        const ranked_summoner = list_ranked.data.map((ranked) => ({
-            typeGame: ranked.queueType,
-            tier: ranked.tier,
-            summonerName: ranked.summonerName,
-            points: ranked.leaguePoints,
-            wins: ranked.wins,
-            losses: ranked.losses,
-            winRate: ((ranked.wins / (ranked.wins + ranked.losses)) * 100).toFixed(1)
-        }))
-    
-    return ranked_summoner
-    }
-}
 
 
 module.exports = {
@@ -440,11 +437,11 @@ module.exports = {
     get_match_data_participants,
     get_historic,
     // get_id_summoner,
-    get_puuid,
+    //get_puuid,
     get_ranked_summoner,
     get_top_champions,
-    get_name_historic,
+    get_summoner_historic,
     // get_profile_icon,
-		getSummonerData,
-		getNameListChampion
+	getSummonerData,
+	getNameListChampion
     };

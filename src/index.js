@@ -14,43 +14,60 @@ app.listen(3500)
 app.use(json())
 
 
-
+async function main(){
 /*
     Função principal
     Input:
     Output:
     */
-app.get('/:region/summoner/:summonerName', async (req, res) => {
-    try {
-        const {summonerName, region} = req.params
+    app.get('/:region/summoner/:summonerName', async (req, res) => {
+        try {
+            const {summonerName, region} = req.params
+                
+            const summonerData = await appLol.getSummonerData(summonerName,region)
+            const profileIcon = summonerData.profileIcon
+                    //const listMatch = await appLol.get_list_match(summonerData.puuid)
+                    //const championList = await appLol.getNameListChampion()
+                    
+                    // const dataMatchSummoner = await appLol.get_summoner_historic(summonerName,region, listMatch)
+
+                    //const historic = await appLol.get_historic(summonerName,region,0)
+
+                    //const id_player = summonerData.id_summoner
+                    
+                    //const champions = await appLol.get_top_champions(id_player, region, championList)
+                    
+            const ranked_summoner = await appLol.get_ranked_summoner(summonerData.id, region)
+                    
+                    
+            return res.status(200).json({
+                profileIcon,
+                summonerName: summonerData.name,
+                summonerLevel: summonerData.summonerLevel,
+                ranked_summoner
+            })
+        } catch (error) {
+                return res.status(418).json(error)
+        }
+    })
+
+    app.get('/:continent/:region/:summonerName/selfHistoric', async (req,res) => {
+        try{
+            const {summonerName, region, continent} = req.params
             
-				const summonerData = await appLol.getSummonerData(summonerName,region)
-				const profileIcon = summonerData.profileIcon
-				const listMatch = await appLol.get_list_match(summonerData.puuid)
-				const championList = await appLol.getNameListChampion()
-				
-				// const dataMatchSummoner = await appLol.get_name_historic(summonerName,region, listMatch)
+            const summonerData = await appLol.getSummonerData(summonerName, region)
+            const listMatch = await appLol.get_list_match(summonerData.puuid, continent)
 
-				// const historic = await appLol.get_historic(summonerName,region,0)
+            return res.status(200).json({
+                listMatch
+            })
+        } catch (error){
+            return res.status(418).json(error)
+        }
 
-				const id_player = summonerData.id_summoner
-				
-				const champions = await appLol.get_top_champions(id_player, region, championList)
-				
-				const ranked_summoner = await appLol.get_ranked_summoner(id_player, region)
-				
-				
-				return res.status(200).json({
-					profileIcon,
-					summonerName: summonerData.name,
-					ranked_summoner,
-					listMatch
-				})
-    } catch (error) {
-			return res.status(418).json(error)
-    }
-})
- async function main(){
+
+    })
+
     //Função de chamada para o front
 
 //thyenne includes
@@ -59,7 +76,7 @@ app.get('/:region/summoner/:summonerName', async (req, res) => {
 
     //Função try catch para endpoint da página Summoner
     
-    
+   /* 
     //Função try catch para endpoint da página Match
     try{
         //Função de try catch para todas as variaveis que importam funções do modulo de requisições
@@ -97,7 +114,7 @@ app.get('/:region/summoner/:summonerName', async (req, res) => {
     {
             console.log("Error Log: " + err) 
     }
-
+*/
 }
 
 main() //Chamada da função main
