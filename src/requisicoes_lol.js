@@ -114,13 +114,9 @@ Output: Id do Jogador
         region = data.default_region
     
     url = "https://" + region + riotURL + summoner_name
-
     const summonerIdResponde = await axios.get(url , { headers : { "X-Riot-Token": key} })
-
     return summonerIdResponde.data.puuid
 }
-
-
 /*
 Função que pega da API Summoners uma lista de partidas de um jogador
 Input:
@@ -129,45 +125,18 @@ Output: Lista de partidas de um jogador
 async function get_list_match(puuid,continent)
 {
     const server = continent ?? default_continent
-    const url = "https://" + server + 
-    ".api.riotgames.com/lol/match/v5/matches/by-puuid/" + 
+    const url = "https://" + server + match_URL + "by-puuid/" + 
     puuid + "/ids?start=" + "0" + "&count=" + "20"
 
     const matchIdResponde = await axios.get(url , { headers : { "X-Riot-Token": riotKey} })
     const result = matchIdResponde.data
     
-    return result
-    
-}
+    var listMatch = []
 
-
-/*
-Função que pega dados de uma só partida
-Input: Lista de partidas
-Output: Dados de uma partida 
-*/
-async function get_match_data_participants(continent, partida)
-{
-    const server = continent ?? default_continent
-
-    const api_match_url = "https://" + server + 
-    match_URL + partida
-
-    const matchData = await axios.get(api_match_url, { headers : { "X-Riot-Token": riotKey} })
-    return matchData.data
-    //return api_match_url
-}
-
-
-/*
-Função que retorna o tipo da partida (Aram, Flex, Normal game...) de uma lista de partidas
-Input: match_id
-Output: tipo de partida
-*/
-function get_type_game(match)
+    function get_type_game(match)
 {
     let i;
-    const idtypegame = match.info.queueId
+    const idtypegame = match.queueId
     let typeGame
 
     for(i = 0; i < types.length; i++)
@@ -179,28 +148,6 @@ function get_type_game(match)
     }
     return typeGame
 }
-
-//Função para transformar segundos da partida no formato hh:mm:ss
-function timest(segundos){
-    const h = segundos/ 3600
-    const m = (segundos % 3600) / 60
-    const s = (segundos % 3600) % 60
-    const t = parseInt(h) + ":" + parseInt(m) + ":" + parseInt(s)
-    return t
-}
-
-/*
-Função que retorna dados filtrados de todos os jogadores de uma partida
-Input: Número da partida da lista de partidas
-Output: Histórico de uma partida
-*/
-async function get_historic(puuid, continent,i)
-{
-    
-    const listajogo = await get_list_match(puuid,continent)
-    const match_data = await get_match_data_participants(continent, listajogo[listajogo.findIndex(j => j === i)])
-    
-    const match_data_participants = match_data.info.participants
 
     function runasicon(x)
     {
@@ -263,54 +210,125 @@ async function get_historic(puuid, continent,i)
         }     
     }
 
-    const gameDuration = "gameDuration: " + timest(match_data.info.gameDuration)
+
+    for (var i of result){
+        const api_match_url = "https://" + server + match_URL + i
+        const matchData = await axios.get(api_match_url, { headers : { "X-Riot-Token": riotKey} })
+            .then(res => {
+                const datalol = res.data
+                const gameDuration = datalol.info.gameDuration
+                const playersMatch = datalol.info.participants.map((player) => ({
+                    kills: player.kills,
+                    assists: player.assists,
+                    deaths: player.deaths,
+                    win: player.win,
+                    lane: player.lane,
+                    championName: player.championName,
+                    championLevel: player.champLevel,
+                    gold: player.goldEarned,
+                    minions: player.totalMinionsKilled + player.neutralMinionsKilled,
+                    nome: player.summonerName,
+                    damage: player.totalDamageDealtToChampions,
+                    typegame: get_type_game(player),
+        
+                    //runas
+                    rune: data.runas_Icon + runasicon(player.perks.styles[0].style),
+                    rune_name: runasname(player.perks.styles[0].style),
+
+                    //itens
+                    item0: data.item_Icon + player.item0 + ".png",
+                    item0name: itemname(player.item0),
+                    item1: data.item_Icon + player.item1 + ".png",
+                    item1name: itemname(player.item1),
+                    item2: data.item_Icon + player.item2 + ".png",
+                    item2name: itemname(player.item2),
+                    item3: data.item_Icon + player.item3 + ".png",
+                    item3name: itemname(player.item3),
+                    item4: data.item_Icon + player.item4 + ".png",
+                    item4name: itemname(player.item4),
+                    item5: data.item_Icon + player.item5 + ".png",
+                    item5name: itemname(player.item5),
+                    item6: data.item_Icon + player.item6 + ".png",
+                    item6name: itemname(player.item6),
+
+                    //feitiços de invocador
+                    spell1: data.spells_Icon + icon_spells(player.summoner1Id) + ".png",
+                    spell1name: name_spells(player.summoner1Id), 
+                    spell2: data.spells_Icon + icon_spells(player.summoner2Id) + ".png",
+                    spell2name: name_spells(player.summoner2Id),
+
+                    //ícone do campeão
+                    championIcon: data.champion_Icon + player.championName + ".png"
+                }))
+                return [gameDuration, playersMatch]
+                
+            })
+        listMatch.push(matchData)
+    }
+    return listMatch
+    
+    
+}
+
+
+/*
+Função que pega dados de uma só partida
+Input: Lista de partidas
+Output: Dados de uma partida 
+*/
+/*async function get_match_data_participants(continent, partida)
+{
+    const server = continent ?? default_continent
+
+    const api_match_url = "https://" + server + 
+    match_URL + partida
+
+    const matchData = await axios.get(api_match_url, { headers : { "X-Riot-Token": riotKey} })
+    return matchData.data
+    //return api_match_url
+}*/
+
+
+/*
+Função que retorna o tipo da partida (Aram, Flex, Normal game...) de uma lista de partidas
+Input: match_id
+Output: tipo de partida
+*/
+
+
+//Função para transformar segundos da partida no formato hh:mm:ss
+function timest(segundos){
+    const h = segundos/ 3600
+    const m = (segundos % 3600) / 60
+    const s = (segundos % 3600) % 60
+    const t = parseInt(h) + ":" + parseInt(m) + ":" + parseInt(s)
+    return t
+}
+
+/*
+Função que retorna dados filtrados de todos os jogadores de uma partida
+Input: Número da partida da lista de partidas
+Output: Histórico de uma partida
+*/
+async function get_historic(puuid, continent)
+{
+    
+    //const listajogo = await get_list_match(puuid,continent)
+    //const match_data = await get_match_data_participants(continent, listajogo[listajogo.findIndex(j => j === i)])
+    
+    //const match_data_participants = match_data.info.participants
+
+    
+
+    const match_data_participants = await get_list_match(puuid,continent)
+    
 
     const listaParticipantes = match_data_participants.map((participante) => ({
-        kills: participante.kills,
-        assists: participante.assists,
-        deaths: participante.deaths,
-        win: participante.win,
-        lane: participante.lane,
-        championName: participante.championName,
-        championLevel: participante.champLevel,
-        gold: participante.goldEarned,
-        minions: participante.totalMinionsKilled + participante.neutralMinionsKilled,
-        nome: participante.summonerName,
-        damage: participante.totalDamageDealtToChampions,
-        typegame: get_type_game(match_data),
-        
-        //runas
-        rune: data.runas_Icon + runasicon(participante.perks.styles[0].style),
-        rune_name: runasname(participante.perks.styles[0].style),
-
-        //itens
-        item0: data.item_Icon + participante.item0 + ".png",
-        item0name: itemname(participante.item0),
-        item1: data.item_Icon + participante.item1 + ".png",
-        item1name: itemname(participante.item1),
-        item2: data.item_Icon + participante.item2 + ".png",
-        item2name: itemname(participante.item2),
-        item3: data.item_Icon + participante.item3 + ".png",
-        item3name: itemname(participante.item3),
-        item4: data.item_Icon + participante.item4 + ".png",
-        item4name: itemname(participante.item4),
-        item5: data.item_Icon + participante.item5 + ".png",
-        item5name: itemname(participante.item5),
-        item6: data.item_Icon + participante.item6 + ".png",
-        item6name: itemname(participante.item6),
-
-        //feitiços de invocador
-        spell1: data.spells_Icon + icon_spells(participante.summoner1Id) + ".png",
-        spell1name: name_spells(participante.summoner1Id), 
-        spell2: data.spells_Icon + icon_spells(participante.summoner2Id) + ".png",
-        spell2name: name_spells(participante.summoner2Id),
-
-        //ícone do campeão
-        championIcon: data.champion_Icon + participante.championName + ".png"
-        
+        gameDuration:timest(participante[0]),
+        partida:participante[1],    
     }));
     
-    return [gameDuration, listaParticipantes]
+    return listaParticipantes
     //return match_data
 }
 
@@ -320,18 +338,41 @@ Função que retorna dados filtrados de uma partida do jogador
 Input: Nome do jogador e número da partida na lista de partidas
 Output: Mini histórico do jogador da partida solicitada
 */
-async function get_summoner_historic(puuid, summonerName, continent)
+async function get_summoner_historic(puuid, continent, summonerName)
 {  
     var listap = []
     
     const listajogo = await get_list_match(puuid, continent)
-
+    
     for (var k = 0; k < listajogo.length; k++)
     {
-        const match_data = await get_match_data_participants(continent, listajogo[k])
-        const match_data_participants = match_data.info.participants
+        for (var jk = 0; jk < 10; jk++){
+            if (listajogo[k][1][jk].nome == summonerName){
+                const matchWay = listajogo[k][1][jk]
+                const listaPlayer = matchWay.map((player)=>({
+                typegame: player.typegame,
+                kills: player.kills,
+                assists: player.assists,
+                deaths: player.deaths,
+                win: player.win,
+                kda: player.challenges.kda,
+                lane: player.lane,
+                championName: player.championName,             
+                gameDuration: listajogo[k][0],
+                championIcon: champion_Icon + player.championName + ".png"
+                }))
+                listap.push(listaPlayer)
+    }}}
+    //const sum_historic = listajogo.map((player) => ({
         
-        for (var jk = 0; jk < match_data_participants.length; jk++)
+    //const championName = listaChampions.filter(player => player.summonerName == match_data_participants[jk].summonerName)[0].name
+/*
+    for (var k = 0; k < listajogo.length; k++)
+    {
+        //const match_data = await get_match_data_participants(continent, listajogo[k])
+        //const match_data_participants = match_data.info.participants
+        
+        for (var jk = 0; jk < listajogo.length; jk++)
         {
             if (summonerName == match_data_participants[jk].summonerName){
                 let meu_participante = {
@@ -351,6 +392,9 @@ async function get_summoner_historic(puuid, summonerName, continent)
             }  
         }
     }
+    return listap
+}))
+}*/
     return listap
 }
 
@@ -433,7 +477,7 @@ async function get_top_champions(id_jogador, region)
 
 module.exports = {
     get_list_match,
-    get_match_data_participants,
+    //get_match_data_participants,
     get_historic,
     // get_id_summoner,
     //get_puuid,

@@ -75,7 +75,23 @@ async function main(){
 
 
     //Função try catch para endpoint da página Summoner
-    
+    app.get('/:continent/:region/:summonerName/match', async (req,res) => {
+        try{
+
+            const {continent,region,summonerName} = req.params
+                
+            const summonerData = await appLol.getSummonerData(summonerName,region)
+            //const matchs = await appLol.get_list_match(summonerData.puuid,continent)
+            //const historic = await appLol.get_historic(summonerData.puuid,continent)
+            const selfHistoric = await appLol.get_summoner_historic(summonerData.puuid, continent, summonerData.name)
+            return res.status(200).json(
+                selfHistoric)
+        }catch(error){
+            //return res.status(418).json(error)
+            console.log(error)
+        }
+
+    })
     
     //Função try catch para endpoint da página Match
     
