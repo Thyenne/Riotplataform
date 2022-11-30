@@ -337,7 +337,7 @@ async function get_historic(puuid, continent)
 Função que retorna dados filtrados de uma partida do jogador 
 Input: Nome do jogador e número da partida na lista de partidas
 Output: Mini histórico do jogador da partida solicitada
-*/
+*//*
 async function get_summoner_historic(puuid, continent, summonerName)
 {  
     var listap = []
@@ -394,10 +394,10 @@ async function get_summoner_historic(puuid, continent, summonerName)
     }
     return listap
 }))
-}*/
+}
     return listap
 }
-
+*/
 
 
 
@@ -483,7 +483,7 @@ module.exports = {
     //get_puuid,
     get_ranked_summoner,
     get_top_champions,
-    get_summoner_historic,
+    //get_summoner_historic,
     // get_profile_icon,
     get_name_champion,
 	getSummonerData,
