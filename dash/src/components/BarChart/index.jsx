@@ -3,6 +3,7 @@ import { ResponsiveBar } from '@nivo/bar'
 
 const BarChart = ({ data, keys, indexBy, ...others }) => {
   return (
+    <StyledBarChart>
     <ResponsiveBar
         data={data}
         keys={keys}
@@ -79,6 +80,7 @@ const BarChart = ({ data, keys, indexBy, ...others }) => {
         ariaLabel="Últimas partidas"
         barAriaLabel={function(e){return e.id+": "+e.formattedValue+" na partida: "+e.indexValue}}
     />
+    </StyledBarChart>
   );
 };
 
