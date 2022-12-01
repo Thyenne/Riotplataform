@@ -4,6 +4,6 @@ export const StyledBarChart = styled.div`
   position: relative;
 
   > div {
-    height: 600px;
+    height: 600px !important;
   }
 `
