@@ -12,6 +12,8 @@ export function Dashboard() {
       <Banner
         avatar={data.profileIcon}
         summonerName={data.summonerName}
+        summonerLevel={data.summonerLevel}
+        data={data.ranked_summoner}
       >sdlkjf</Banner>
     </StyledDashboard>
   );

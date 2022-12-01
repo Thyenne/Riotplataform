@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState } from "react";
 import { getByName } from "../services/Summoners";
 
 export const AuthContext = createContext({})
@@ -31,6 +31,7 @@ const AuthContextProvider = ({ children }) => {
         }
         window.localStorage.setItem('loginData', JSON.stringify(objData))
         setLoginData(objData)
+        window.location.href = '/dashboard'
       })
       .catch(res => {
         const messageError = res.response.data.status === 404 ?
@@ -52,3 +53,4 @@ const AuthContextProvider = ({ children }) => {
 }
 
 export { AuthContextProvider };
+

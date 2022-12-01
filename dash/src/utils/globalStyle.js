@@ -6,7 +6,7 @@ const GlobalStyle = createGlobalStyle`
     font-family: "Roboto";
     margin: 0 !important;
     padding: 0 !important;
-    background: #010A13;
+    {theme => theme && color: theme.palette.primary.main}
 
     [disabled] {
       opacity: 0.55;

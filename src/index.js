@@ -21,51 +21,60 @@ async function main(){
     Output:
     */
     app.get('/:region/summoner/:summonerName', async (req, res) => {
+      try {
+          const {summonerName, region} = req.params
+              
+          const summonerData = await appLol.getSummonerData(summonerName,region)
+          const profileIcon = summonerData.profileIcon
+                  //const listMatch = await appLol.get_list_match(summonerData.puuid)
+                  //const championList = await appLol.getNameListChampion()
+                  
+                  // const dataMatchSummoner = await appLol.get_summoner_historic(summonerName,region, listMatch)
+
+                  //const historic = await appLol.get_historic(summonerName,region,0)
+
+                  //const id_player = summonerData.id_summoner
+                  
+                  //const champions = await appLol.get_top_champions(id_player, region, championList)
+                  
+        const ranked_summoner = await appLol.get_ranked_summoner(summonerData.id, region)
+                  
+                  
+        return res.status(200).json({
+          profileIcon,
+          summonerName: summonerData.name,
+          summonerLevel: summonerData.summonerLevel,
+          ranked_summoner,
+          puuid: summonerData.puuid
+        })
+      } catch (error) {
+        return res.status(418).json(error)
+      }
+    })
+
+    app.get('/listMatch/:puuid', async (req, res) => {
         try {
-            const {summonerName, region} = req.params
-                
-            const summonerData = await appLol.getSummonerData(summonerName,region)
-            const profileIcon = summonerData.profileIcon
-                    //const listMatch = await appLol.get_list_match(summonerData.puuid)
-                    //const championList = await appLol.getNameListChampion()
-                    
-                    // const dataMatchSummoner = await appLol.get_summoner_historic(summonerName,region, listMatch)
-
-                    //const historic = await appLol.get_historic(summonerName,region,0)
-
-                    //const id_player = summonerData.id_summoner
-                    
-                    //const champions = await appLol.get_top_champions(id_player, region, championList)
-                    
-            const ranked_summoner = await appLol.get_ranked_summoner(summonerData.id, region)
-                    
-                    
-            return res.status(200).json({
-                profileIcon,
-                summonerName: summonerData.name,
-                summonerLevel: summonerData.summonerLevel,
-                ranked_summoner
-            })
+            const { puuid } = req.params
+            const listMatch = await appLol.get_list_match(puuid)
+            return res.status(200).json(listMatch)
         } catch (error) {
-                return res.status(418).json(error)
+            return res.status(418).json(error)
         }
     })
 
     app.get('/:continent/:region/:summonerName/selfHistoric', async (req,res) => {
-        try{
-            const {summonerName, region, continent} = req.params
-            
-            const summonerData = await appLol.getSummonerData(summonerName, region)
-            
-            const summoner_historic = await appLol.get_summoner_historic(summonerData.puuid, summonerData.name, continent)
-            return res.status(200).json({
-                summoner_historic
-            })
-        } catch (error){
-            return res.status(418).json(error)
-        }
-
-
+      try{
+        const {summonerName, region, continent} = req.params
+        
+        const summonerData = await appLol.getSummonerData(summonerName, region)
+        
+        const summoner_historic = await appLol.get_summoner_historic(summonerData.puuid, summonerName, continent)
+        return res.status(200).json({
+            summoner_historic
+        })
+      } catch (error){
+        return res.status(418).json(error)
+      }
     })
 
     //Função de chamada para o front

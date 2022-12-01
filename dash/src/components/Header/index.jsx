@@ -1,16 +1,3 @@
-// import { StyledHeader } from './styles';
-
-// const Header = ({ children }) => {
-//   return (
-//     <StyledHeader>
-//       {children}
-//     </StyledHeader>
-//   );
-// };
-
-// export { Header };
-
-
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';

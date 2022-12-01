@@ -1,5 +1,5 @@
 import styled from "styled-components"
-
-export const StyledBanner = styled.div`
+import Box from '@mui/material/Box';
+export const StyledBanner = styled(Box)`
   position: relative;
 `

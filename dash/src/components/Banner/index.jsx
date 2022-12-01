@@ -1,44 +1,62 @@
-import { StyledBanner } from './styles';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
 import Avatar from '@material-ui/core/Avatar';
-import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import { ResponsiveBar } from '@nivo/bar'
+import { BarChart } from '../BarChart';
+import { StyledBanner } from './styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
-  paper: {
-    padding: theme.spacing(2),
-    textAlign: 'center',
-  },
   avatar: {
-    width: theme.spacing(20),
-    height: theme.spacing(20),
+    width: theme.spacing(7),
+    height: theme.spacing(7),
   },
 }));
 
-const Banner = ({ avatar, summonerName }) => {
+const Banner = ({ avatar, summonerName, summonerLevel, data }) => {
   const classes = useStyles();
   return (
     <StyledBanner>
-      <Grid container spacing={4}>
-        <Grid item xs>
-          <Paper className={classes.paper}>
-            <Avatar
-              alt={`Avatar de ${summonerName}`}
-              src={avatar}
-              className={classes.avatar}
-            />
-          </Paper>
+      <Grid container>
+        <Grid item md={3}>
+          <Grid container>
+            <Grid item md={2}>
+              <Avatar
+                alt={`Avatar de ${summonerName}`}
+                src={avatar}
+                className={classes.avatar}
+              />   
+            </Grid>
+            <Grid item md={10}>
+              <Typography variant="h3">
+                {summonerName}
+              </Typography>
+              <Typography variant="body1">
+                Level: <strong>{summonerLevel}</strong>
+              </Typography>
+            </Grid>
+          </Grid>
+        </Grid>
+        <Grid item md={1}>
+          asdas
+        </Grid>
+        <Grid item md={1}>
+          <Typography variant="h1" component="h2" gutterBottom>
+            {summonerName}
+          </Typography>
         </Grid>
         <Grid item xs={8}>
-          <Paper className={classes.paper}>
-            <Typography variant="h1" component="h2" gutterBottom>
-              {summonerName}
-            </Typography>
-          </Paper>
+          <BarChart
+            keys={[
+              'wins',
+              'losses',
+            ]}
+            indexBy="typeGame"
+            data={data}
+          />
         </Grid>
       </Grid>
     </StyledBanner>
@@ -46,3 +64,4 @@ const Banner = ({ avatar, summonerName }) => {
 };
 
 export { Banner };
+
