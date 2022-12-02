@@ -5,14 +5,16 @@ import Typography from '@material-ui/core/Typography';
 import { ResponsiveBar } from '@nivo/bar'
 import { BarChart } from '../BarChart';
 import { StyledBanner } from './styles';
+import { ResponsivePie } from '@nivo/pie'
+import { PieChart } from '../Pie';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
   avatar: {
-    width: theme.spacing(7),
-    height: theme.spacing(7),
+    width: theme.spacing(20),
+    height: theme.spacing(20),
   },
 }));
 
@@ -49,14 +51,14 @@ const Banner = ({ avatar, summonerName, summonerLevel, data }) => {
           </Typography>
         </Grid>
         <Grid item xs={8}>
-          <BarChart
+          {/* <BarChart
             keys={[
               'wins',
               'losses',
             ]}
             indexBy="typeGame"
             data={data}
-          />
+          /> */}
         </Grid>
       </Grid>
     </StyledBanner>

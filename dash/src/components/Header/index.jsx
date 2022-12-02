@@ -17,11 +17,10 @@ const Header = ({ menuList }) => {
             color="inherit"
             aria-label="menu"
             sx={{ mr: 2 }}
-          >
-            <MenuIcon />
+          > 
           </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Riot Tracker
+          <Typography variant="h6" component="div" sx={{ flexGrow: 2 }}>
+            Riot Way
           </Typography>
           {
             menuList.map((item, index) => (

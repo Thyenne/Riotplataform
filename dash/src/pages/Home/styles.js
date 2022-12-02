@@ -7,4 +7,5 @@ export const StyledHome = styled.section`
   min-height: calc(100vh - 64px);
   width: 100vw;
   position: relative;
+  background-color:#010A13;
 `;

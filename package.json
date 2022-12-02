@@ -18,9 +18,16 @@
   },
   "homepage": "https://github.com/Lucas-335/riot_plataform#readme",
   "dependencies": {
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@mui/material": "^5.10.16",
+    "@mui/styled-engine-sc": "^5.10.16",
+    "@mui/x-data-grid-pro": "^5.17.14",
+    "@nivo/pie": "^0.80.0",
     "axios": "^1.1.3",
     "express": "^4.18.2",
     "nodemon": "^2.0.20",
+    "styled-components": "^5.3.6",
     "yarn": "^1.22.19"
   },
   "devDependencies": {
