@@ -7,6 +7,7 @@ export function Home() {
   const { serverList, login } = useContext(AuthContext)
 
   return (
+    
     <StyledHome>
       <SearchInput servers={serverList} label="Digite o seu Riot ID" searchAction={login} />
     </StyledHome>

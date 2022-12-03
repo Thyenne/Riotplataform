@@ -34,7 +34,7 @@ const Banner = ({ avatar, summonerName, summonerLevel, data }) => {
             </Grid>
             <Grid item md={10}>
               <Typography variant="h3">
-                {summonerName}
+                aia 
               </Typography>
               <Typography variant="body1">
                 Level: <strong>{summonerLevel}</strong>
@@ -50,16 +50,7 @@ const Banner = ({ avatar, summonerName, summonerLevel, data }) => {
             {summonerName}
           </Typography>
         </Grid>
-        <Grid item xs={8}>
-          {/* <BarChart
-            keys={[
-              'wins',
-              'losses',
-            ]}
-            indexBy="typeGame"
-            data={data}
-          /> */}
-        </Grid>
+       
       </Grid>
     </StyledBanner>
   );

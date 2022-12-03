@@ -3,39 +3,40 @@ import { createTheme } from '@mui/material/styles';
 export const theme = createTheme({
   palette: {
     background: {
-      default: "#222222",
-      allVariants: "#222222",
-      main: "#222222"
+        default: "#010a13",
+        allVariants: "#222222",
+        main: "#222222",
+        color:"010A13"
     },
     text: {
-      primary: "#C89B3C",
-      default: "#6cf"
+      primary: "#F0E6D2",
+      default: "#F0E6D2"
     }
   },
   background: {
-    color: "#222"
+    color: "#010A13"
   },
   typography: {
     allVariants: {
-      color: '#6cb',
+      color: '#F0E6D2',
     },
     h1: {
-      color: '#6c3'
+      color: '#F0E6D2'
     },
     h2: {
-      color: '#6c3'
+      color: '#F0E6D2'
     },
     h3: {
-      color: '#6c3'
+      color: '#F0E6D2'
     },
     h4: {
-      color: '#6c3'
+      color: '#F0E6D2'
     },
     h5: {
-      color: '#6c3'
+      color: '#F0E6D2'
     },
     h6: {
-      color: '#6c3'
+      color: '#F0E6D2'
     }
   }
 });
