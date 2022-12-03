@@ -38,13 +38,7 @@ export function Dashboard() {
         data={data.ranked_summoner}
       />
       
-      {
-      rows.length > 0 && 
-        <StickyHeadTable
-        columns={columns}
-        rows={rows}
-        />
-      }
+      
      
     
 
