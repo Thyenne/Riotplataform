@@ -34,7 +34,7 @@ const Banner = ({ avatar, summonerName, summonerLevel, data }) => {
             </Grid>
             <Grid item md={10}>
               <Typography variant="h3">
-                aia 
+                {summonerName}
               </Typography>
               <Typography variant="body1">
                 Level: <strong>{summonerLevel}</strong>

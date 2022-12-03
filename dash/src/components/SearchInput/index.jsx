@@ -31,10 +31,10 @@ const SearchInput = ({ label, searchAction, servers }) => {
 
     
 
-    <Box sx={{ display: 'flex', alignItems: 'flex-end', maxWidth: '600px', width: '100%' }} >
+    <Box sx={{ display: 'flex', alignItems: 'flex-end', maxWidth: '600px', width: '100%'}} >
 
-      <FormControl style={{ width: 120, marginRight: 15 }}>
-        <InputLabel id="demo-simple-select-label">Server</InputLabel>
+      <FormControl style={{ width: 120, marginRight: 15, background:"black", opacity:0.7}}>
+        <InputLabel id="demo-simple-select-label">Servidor</InputLabel>
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
@@ -44,13 +44,13 @@ const SearchInput = ({ label, searchAction, servers }) => {
         >
           {
             servers.map((server) => (
-              <MenuItem key={server.value} value={server.value}>{server.label}</MenuItem>
+              <MenuItem key={server.value} style={{color:"black"}} value={server.value}>{server.label}</MenuItem>
             ))
           }
         </Select>
       </FormControl>
-      <TextField id="input-with-sx" label={label} value={name} variant="outlined" onChange={e => setName(e.target.value)} fullWidth />
-      <Button variant="contained" onClick={() => handleSearch(name)} ><SearchIcon /></Button>
+      <TextField id="input-with-sx" label={label} value={name} variant="outlined" onChange={e => setName(e.target.value)} fullWidth style={{background:"black", opacity:0.7}}/>
+      <Button style={{height:56}} variant="contained" onClick={() => handleSearch(name)} ><SearchIcon /></Button>
       
       
     </Box>

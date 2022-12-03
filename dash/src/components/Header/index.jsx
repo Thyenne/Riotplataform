@@ -8,7 +8,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 
 const Header = ({  menuList }) => {
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flexGrow: 1 }>
       <AppBar position="static">
         <Toolbar>
           <IconButton
@@ -17,14 +17,15 @@ const Header = ({  menuList }) => {
             color="inherit"
             aria-label="menu"
             sx={{ mr: 2 }}
-          > 
+          >
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Riot Way
+            RIOT WAY
           </Typography>
           {
             menuList.map((item, index) => (
               <Button key={index} color="inherit">{ item.label }</Button>
+               
             ))
           }
         </Toolbar>
