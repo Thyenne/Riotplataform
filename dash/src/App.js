@@ -12,6 +12,8 @@ import { theme } from './utils/theme';
 
 import { Home } from './pages/Home';
 import { Dashboard } from './pages/Dashboard';
+
+
 import { AuthContextProvider } from './contexts';
 
 function App() {
@@ -28,6 +30,9 @@ function App() {
           <Routes>
             <Route index element={<Home />} />
             <Route path="/dashboard" element={<Dashboard />} />
+           
+            
+            
             {/* <Route path="/cadastro-positivo" element={<Cadastro />}>
               <Route path="comunicacao" element={<Comunicacao />} />
             </Route> */}

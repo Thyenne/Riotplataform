@@ -47,7 +47,7 @@ const DataTable = ({ rows, columns }) => {
   };
 
   return (
-    <Paper className={classes.root}>
+    <Paper className={classes.root} borderRadius="4px">
       <TableContainer className={classes.container}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>

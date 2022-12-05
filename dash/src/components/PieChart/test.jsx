@@ -2,14 +2,14 @@ import '@testing-library/jest-dom/extend-expect';
 import { screen } from '@testing-library/react';
 import * as React from 'react';
 import { renderWithTheme } from 'utils/renderWithTemplate';
-import { Header } from '.';
+import { PieChart } from '.';
 
-describe('<Header />', () => {
+describe('<PieChart />', () => {
   it('should mount', () => {
-    renderWithTheme(<Header>Lorem ipsum</Header>);
+    renderWithTheme(<PieChart>Lorem ipsum</PieChart>);
     
-    const headerContent = screen.getByText('Lorem ipsum')
+    const PieChartContent = screen.getByText('Lorem ipsum')
 
-    expect(headerContent).toBeInTheDocument();
+    expect(PieChartContent).toBeInTheDocument();
   });
 });

@@ -1,8 +1,9 @@
 import styled from "styled-components"
 import Box from '@mui/material/Box';
 
-export const StyledBanner = styled(Box)`
+export const StyledHistoric = styled(Box)`
   position: relative;
   display: flex;
-  alignContent: center;
+  margin: 20px;
+  
 `

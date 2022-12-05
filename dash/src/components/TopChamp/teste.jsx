@@ -1,15 +1,16 @@
+
 import '@testing-library/jest-dom/extend-expect';
 import { screen } from '@testing-library/react';
 import * as React from 'react';
 import { renderWithTheme } from 'utils/renderWithTemplate';
-import { BarChart } from '.';
+import { Historic } from '.';
 
-describe('<BarChart />', () => {
+describe('<TopChamp />', () => {
   it('should mount', () => {
-    renderWithTheme(<BarChart>Lorem ipsum</BarChart>);
+    renderWithTheme(<Historic>Lorem ipsum</Historic>);
     
-    const barchartContent = screen.getByText('Lorem ipsum')
+    const TopChampContent = screen.getByText('Lorem ipsum')
 
-    expect(barchartContent).toBeInTheDocument();
+    expect(TopChampcContent).toBeInTheDocument();
   });
 });

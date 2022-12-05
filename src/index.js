@@ -25,7 +25,8 @@ async function main(){
           const {summonerName, region} = req.params
               
           const summonerData = await appLol.getSummonerData(summonerName,region)
-          const profileIcon = summonerData.profileIcon
+          const profileIcon = await summonerData.profileIcon
+          const ranked_summoner = await appLol.get_ranked_summoner(summonerData.id, region)
                   //const listMatch = await appLol.get_list_match(summonerData.puuid)
                   //const championList = await appLol.getNameListChampion()
                   
@@ -37,7 +38,7 @@ async function main(){
                   
                   //const champions = await appLol.get_top_champions(id_player, region, championList)
                   
-        const ranked_summoner = await appLol.get_ranked_summoner(summonerData.id, region)
+        
                   
                   
         return res.status(200).json({

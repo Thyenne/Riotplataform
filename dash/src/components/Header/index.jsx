@@ -4,32 +4,48 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
+import { useTheme } from '@emotion/react';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import  HomeRounded  from '@mui/icons-material/HomeRounded';
+// import icone  from '../Lol.png';
+
+
+
 
 const Header = ({  menuList }) => {
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: '#010A13',
+      },
+      secondary: {
+        main: '#11cb5f',
+      },
+    },
+  });
+
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+    <Box display="flex">
+    <ThemeProvider theme={theme}>  
+      <AppBar position="static" color="primary" >
         <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-          >
-          </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            RIOT WAY
-          </Typography>
-          {
+          {/*ICONE HOME  */}
+        {
             menuList.map((item, index) => (
-              <Button key={index} color="inherit">{ item.label }</Button>  
+              <Button key={index} color="inherit" onClick={() => window.location.href = "/"}><HomeRounded sx={{fontSize: 35}}/></Button>  
             ))
           }
+
+          
+
+          {/*ICONES DIREITA */}
+
+          {/*<img src={icone} />*/}
+          
         </Toolbar>
       </AppBar>
-    </Box>
+    </ThemeProvider>
+  </Box>
   );
 }
 

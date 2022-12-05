@@ -2,11 +2,11 @@ import '@testing-library/jest-dom/extend-expect';
 import { screen } from '@testing-library/react';
 import * as React from 'react';
 import { renderWithTheme } from 'utils/renderWithTemplate';
-import { BannerHistoric } from '.';
+import { BannerTopChamp } from '.';
 
-describe('<BannerHistoric />', () => {
+describe('<BannerTopChamp />', () => {
   it('should mount', () => {
-    renderWithTheme(<BannerHistoric>Lorem ipsum</BannerHistoric>);
+    renderWithTheme(<BannerTopChamp>Lorem ipsum</BannerTopChamp>);
     
     const bannerHistoricContent = screen.getByText('Lorem ipsum')
 
