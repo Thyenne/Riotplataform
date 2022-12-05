@@ -1,6 +1,6 @@
 import { createContext, useState } from "react";
 import { getByName } from "../services/Summoners";
-import { serverList } from './serverList'
+import { serverList } from './serverList';
 
 export const AuthContext = createContext({})
 
@@ -13,7 +13,6 @@ const AuthContextProvider = ({ children }) => {
         const objData = {
           ...res.data,
           server,
-          name
         }
         window.localStorage.setItem('loginData', JSON.stringify(objData))
         setLoginData(objData)
@@ -27,10 +26,20 @@ const AuthContextProvider = ({ children }) => {
       })
   }
 
+  const checkAuthentication = (loginData) => {
+    if (!loginData.puuid) {
+      if(typeof loginData !== 'undefined')
+        setLoginData(JSON.parse(loginData))
+      else
+        window.location.href = '/'
+    }
+  }
+
   const value = {
     serverList,
     login,
-    loginData
+    loginData,
+    checkAuthentication
   }
 
   return (

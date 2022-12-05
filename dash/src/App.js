@@ -3,42 +3,23 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import { ThemeProvider } from '@mui/material/styles';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+
 import CssBaseline from '@material-ui/core/CssBaseline';
 
-import { Header } from './components';
-import GlobalStyle from './utils/globalStyle';
+import { AuthContextProvider, DashboardContextProvider } from './contexts';
 import { theme } from './utils/theme';
+import { AppRoutes } from './AppRoutes';
 
-import { Home } from './pages/Home';
-import { Dashboard } from './pages/Dashboard';
-
-
-import { AuthContextProvider } from './contexts';
 
 function App() {
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <AuthContextProvider>
-        <Router>
-          <div className="App">
-            <Header menuList={[
-              {label: 'Home'}
-            ]} />
-          </div>
-          <Routes>
-            <Route index element={<Home />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-           
-            
-            
-            {/* <Route path="/cadastro-positivo" element={<Cadastro />}>
-              <Route path="comunicacao" element={<Comunicacao />} />
-            </Route> */}
-
-          </Routes>
-        </Router>
+        <DashboardContextProvider>
+          <AppRoutes />
+        </DashboardContextProvider>
       </AuthContextProvider>
     </ThemeProvider>
   );

@@ -1,8 +1,6 @@
 import { selfApi } from "../selfApi"
 
-const getChampions = async ({ server, name }) => {
-  return await selfApi.get(`/${server}/${name}/champions`)
-}
+const getChampions = async ({ server, name }) => await selfApi.get(`/${server}/${name}/champions`)
 
 const getSelfHistory = async ({ continent, region, summonerName }) => 
   await selfApi.get(`/${continent}/${region}/${summonerName}/selfHistoric`)

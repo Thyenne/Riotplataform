@@ -1,21 +1,18 @@
-import { useContext, useState, useEffect, React } from 'react';
-import { Banner } from '../../components';
-import { AuthContext, DashboardContext } from '../../contexts';
-import { StyledDashboard } from './styles';
-import { getTopChamp } from '../../services/Topchampions';
 import { Grid } from '@material-ui/core';
-import { Box, Container } from '@mui/system';
-import { Historic } from '../../components/Historic';
-import { PieChart} from '../../components/PieChart';
+import { Box } from '@mui/system';
+import { React, useContext, useEffect, useState } from 'react';
+import { Banner } from '../../components';
 import { BannerHistoric } from '../../components/Bannerhistoric';
 import { BannerTopChamp } from '../../components/BannerTopChamp';
-import { selfHistoric } from '../../services/minihistoric'
+import { AuthContext, DashboardContext } from '../../contexts';
+import { getTopChamp } from '../../services/Topchampions';
+import { StyledDashboard } from './styles';
 
 export function Dashboard() {
   const [ columns, setColumns ] = useState([])
   const [rows, setRows] = useState([])
   const { loginData } = useContext(AuthContext)
-  const { championsList, getChampionsList } = useContext(DashboardContext)
+  const { championsList, loadList, getChampionsList } = useContext(DashboardContext)
   const data = JSON.parse(window.localStorage.getItem('loginData'))
 
   
@@ -32,14 +29,15 @@ export function Dashboard() {
         setColumns(Object.keys(dataResults[0]))
         setRows(dataResults)
       })
-
-      getChampionsList({
-        server: region,
-        name: summonerName
+      // console.log(loginData, region, summonerName)
+      loadList && getChampionsList({
+        server: loginData.server,
+        name: loginData.summonerName
       })
-  }, [rows, championsList])
+  }, [rows, championsList, loginData, loadList])
 
-  console.log(championsList)
+  console.log('lista aqui =>', championsList)
+
   return (
     <StyledDashboard>
       <Banner
