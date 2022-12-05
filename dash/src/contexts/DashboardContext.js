@@ -9,7 +9,7 @@ const DashboardContextProvider = ({ children }) => {
   const [championsList, setChampionsList] = useState([])
 
   const getChampionsList = ({ server, name }) => getChampions({ server, name })
-    .then(res => setChampionsList(res.data))
+    .then(res => console.log(res))
     .catch(err => console.error(err))
   
 

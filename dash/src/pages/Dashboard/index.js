@@ -61,12 +61,9 @@ export function Dashboard() {
 
       <Grid item xs={1}></Grid>
 
-      <Grid item xs={10} container-spacing={2} justifyContent='center'>
-        <Box backgroundColor='#0AC8B9' item xs={5} display='flex' justifyContent='center'>
+      <Box backgroundColor='#0AC8B9' item xs={5} display='flex' justifyContent='center'>
           <BannerTopChamp></BannerTopChamp>
-        </Box>     
-      </Grid>
-      <Grid item xs={1}></Grid>
+          </Box> 
 
       
 
