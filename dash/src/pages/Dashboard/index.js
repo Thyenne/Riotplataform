@@ -4,6 +4,7 @@ import { React, useContext, useEffect, useState } from 'react';
 import { Banner } from '../../components';
 import { BannerHistoric } from '../../components/Bannerhistoric';
 import { BannerTopChamp } from '../../components/BannerTopChamp';
+import { DataTable } from '../../components/DataTable';
 import { AuthContext, DashboardContext } from '../../contexts';
 import { getTopChamp } from '../../services/Topchampions';
 import { StyledDashboard } from './styles';
@@ -11,10 +12,9 @@ import { StyledDashboard } from './styles';
 export function Dashboard() {
   const [ columns, setColumns ] = useState([])
   const [rows, setRows] = useState([])
-  const { loginData } = useContext(AuthContext)
+  const { loginData, riotServer, riotSummonerName } = useContext(AuthContext)
   const { championsList, loadList, getChampionsList } = useContext(DashboardContext)
   const data = JSON.parse(window.localStorage.getItem('loginData'))
-
   
  
 
@@ -31,8 +31,8 @@ export function Dashboard() {
       })
       // console.log(loginData, region, summonerName)
       loadList && getChampionsList({
-        server: loginData.server,
-        name: loginData.summonerName
+        server: riotServer,
+        name: riotSummonerName
       })
   }, [rows, championsList, loginData, loadList])
 
@@ -51,8 +51,33 @@ export function Dashboard() {
       <Grid item xs={1}></Grid>
       <Grid item xs={10} container-spacing={2} justifyContent='center'>
         <Box backgroundColor='#0AC8B9' item xs={5} display='flex' justifyContent='center'>
-          <BannerHistoric></BannerHistoric>
-          <BannerHistoric></BannerHistoric>
+          
+          <BannerHistoric>
+            {/* <DataTable
+              const columns = {[
+                {value: "typegame",label: "Tipo de jogo"},
+                {value: "championName",label: "Nome do campeão"},
+                {value: "championIcon",label: "Ícone"},
+                {value: "kills",label: "Abates"},
+                {value: "assists",label: "Assistências"},
+                {value: "deaths",label: "Mortes"},
+                {value: "win",label: "Vitória"},
+                {value: "kda",label: "KDA"},
+                {value: "lane",label: "Posição"},
+                {value: "gameDuration",label: "Duração do jogo"}
+            ]}
+              rows={championsList}
+            /> */}
+          </BannerHistoric>
+          <BannerHistoric>
+            <DataTable
+              columns={[
+                {value: 'championIcon', label: 'Avatar'},
+                {value: 'championName', label: 'Name'},
+              ]}
+              rows={championsList}
+            />
+          </BannerHistoric>
         </Box>     
       </Grid>
       <Grid item xs={1}></Grid>
@@ -65,6 +90,26 @@ export function Dashboard() {
 
       
 
+      {/* <DataTable
+        columns={[
+          { value: 'id', label: 'Inscrição'},
+          { value: 'name', label: 'Nome'}
+        ]}
+        rows={[
+          {
+            id: '1',
+            name: 'Fabi'
+          },
+          {
+            id: '2',
+            name: 'Thyenne'
+          },
+          {
+            id: '3',
+            name: 'Haus'
+          }
+        ]}
+      /> */}
   
     </StyledDashboard>
   );

@@ -12,8 +12,9 @@ const AuthContextProvider = ({ children }) => {
       .then(res => {
         const objData = {
           ...res.data,
-          server,
         }
+        window.localStorage.setItem('riotServer', server)
+        window.localStorage.setItem('riotSummonerName', name)
         window.localStorage.setItem('loginData', JSON.stringify(objData))
         setLoginData(objData)
         window.location.href = '/dashboard'
@@ -26,12 +27,13 @@ const AuthContextProvider = ({ children }) => {
       })
   }
 
-  const checkAuthentication = (loginData) => {
-    if (!loginData.puuid) {
-      if(typeof loginData !== 'undefined')
-        setLoginData(JSON.parse(loginData))
-      else
-        window.location.href = '/'
+  const checkAuthentication = () => {
+    const localData = window.localStorage.getItem('loginData')
+    if (typeof localData !== 'undefined') {
+      setLoginData(JSON.parse(localData))
+    }
+    else {
+      window.location.href = '/'
     }
   }
 
@@ -39,7 +41,9 @@ const AuthContextProvider = ({ children }) => {
     serverList,
     login,
     loginData,
-    checkAuthentication
+    checkAuthentication,
+    riotServer: window.localStorage.getItem('riotServer'),
+    riotSummonerName: window.localStorage.getItem('riotSummonerName'), 
   }
 
   return (

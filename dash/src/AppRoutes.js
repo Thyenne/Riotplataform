@@ -13,7 +13,7 @@ const AppRoutes = () => {
   const { loginData, checkAuthentication } = useContext(AuthContext)
 
   useEffect(() => {
-    Object.keys(loginData) < 1 && checkAuthentication(window.localStorage.getItem('loginData'))
+    Object.keys(loginData) < 1 && checkAuthentication()
   }, [loginData])
   return (
     <Router>

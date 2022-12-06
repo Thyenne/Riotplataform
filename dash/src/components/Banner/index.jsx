@@ -28,30 +28,27 @@ const Banner = ({ avatar, summonerName, summonerLevel , id }) => {
  
     return (
     <StyledBanner>
-      <Grid item xs={1}></Grid>
-      <Grid item xs={10} >
-        <Box backgroundColor="#0A323C" margin={10}>
-          <Grid container-spacing={2} >
-            <Grid item xs={6}>
-              <Box margin={5} padding={10} display='flex'>
-                <Avatar
-                  display="flex"
-                  alt={'Avatar de  ${summonerName}'}
-                  src={avatar}
-                  className={classes.avatar} />
-                <Box >
-                    <Typography variant="h1" component="h2" gutterBottom>{summonerName}</Typography>
-                    <Typography variant="h4" component="subtitle" gutterBottom >Level: {summonerLevel}</Typography>
-                    <Typography variant="subtitle" component="subtitle" gutterBottom display='flex'>winrate: {id[0]['winRate']}%</Typography>
-                    <Typography variant="h5" component='h2'>{id[0]['wins','losses']}</Typography>
+      
+      <Box backgroundColor="#0A323C"  borderRadius="4px" container-spacing={2} display='flex' alignContent='center' >
               
-                </Box>   
+              <Box display='flex' margin={10}>
+              <Avatar
+                sizes='(max-width:480px)'
+                display="flex"
+                alt={'Avatar de  ${summonerName}'}
+                src={avatar}
+                className={classes.avatar} />
               </Box>
-            </Grid>
-          </Grid>
-        </Box>
-      </Grid>
-      <Grid item xs={1}></Grid>
+              <Box margin={10} alignContent='center'>
+              <Box><Typography variant='h1' component='h2'>{summonerName}</Typography></Box>
+              <Box sx={{p:2, border:'1px line '}}><h1>Level:{summonerLevel}</h1></Box>
+              <Box><h1>Winrate: {id[0]['winRate']}</h1></Box>
+              <Box><h1>wins: {id[0]['wins']}</h1></Box>
+              <Box><h1>losses: {id[0]['losses']}</h1></Box>  
+              </Box>
+
+      </Box>
+    
     </StyledBanner>
   );
 };

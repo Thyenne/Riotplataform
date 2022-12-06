@@ -1,26 +1,18 @@
-import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
 import { Box } from '@mui/material';
-import { theme } from '../../utils/theme';
-import { DataTable } from '../DataTable';
 
 
 
 
 
-const BannerHistoric = () =>  {
-
-
+const BannerHistoric = ({ children }) =>  {
     return(
-     <Grid Grid container-spacing={1} display='flex'>
-        <Box backgroundColor="#0A323C" margin={10} display='flex' alignContent='center'>
-            
-            <Typography variant='h3'>Olá</Typography>
+        <Box backgroundColor="#0A323C"  borderRadius="4px" container-spacing={2} display='flex' alignContent='center' >
+        <Box margin={10} display='flex'>
+            { children }
         </Box>
-     </Grid>   
+     </Box>   
 
 
     )
 }
-export {BannerHistoric};
+export { BannerHistoric };

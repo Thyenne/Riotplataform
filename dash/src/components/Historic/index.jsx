@@ -14,7 +14,7 @@ const Historic = ({rows, data}) =>{
         <StyledHistoric>
         <Box m='20px'>
             <Box m="40px 0 0 0" height="75vh">
-           {/* <DataGrid rows={rows} />*/}
+          
             </Box>
         </Box>
         </StyledHistoric>

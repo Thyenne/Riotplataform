@@ -1,18 +1,5 @@
-// import { StyledDataTable } from './styles';
-
-// const DataTable = ({ data, headers }) => {
-//   return (
-//     <StyledDataTable>
-//       {children}
-//     </StyledDataTable>
-//   );
-// };
-
-// export { DataTable };
-
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
+import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -20,6 +7,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
+import React from 'react';
 
 
 
@@ -58,7 +46,7 @@ const DataTable = ({ rows, columns }) => {
                   align={'center'}
                   style={{ minWidth: 170 }}
                 >
-                  {column}
+                  {column.label}
                 </TableCell>
               ))}
             </TableRow>
@@ -68,7 +56,7 @@ const DataTable = ({ rows, columns }) => {
               return (
                 <TableRow hover role="checkbox" tabIndex={-1} key={rk}>
                   {columns.map((column, colk) => {
-                    const value = row[column];
+                    const value = row[column.value];
                     return (
                       <TableCell key={colk} align={'left'}>
                         {value.endsWith('.png') ? <img src={value} /> : value }
@@ -94,4 +82,4 @@ const DataTable = ({ rows, columns }) => {
   );
 }
 
-export { DataTable }
+export { DataTable };
