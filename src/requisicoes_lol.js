@@ -273,6 +273,7 @@ async function get_summoner_historic(puuid, summonerName, continent)
         {
             if (summonerName == match_data_participants[jk].summonerName){
                 let meu_participante = {
+                "gameId": match_data.metadata.matchId,
                 "typegame": get_type_game(match_data),
                 "kills": match_data_participants[jk].kills,
                 "assists": match_data_participants[jk].assists,

@@ -13,7 +13,13 @@ export function Dashboard() {
   const [ columns, setColumns ] = useState([])
   const [rows, setRows] = useState([])
   const { loginData, riotServer, riotSummonerName } = useContext(AuthContext)
-  const { championsList, loadList, getChampionsList } = useContext(DashboardContext)
+  const {
+    championsList,
+    loadList,
+    getChampionsList,
+    getSelfHistoricList,
+    selfHistoricList
+   } = useContext(DashboardContext)
   const data = JSON.parse(window.localStorage.getItem('loginData'))
   
  
@@ -34,10 +40,13 @@ export function Dashboard() {
         server: riotServer,
         name: riotSummonerName
       })
+      getSelfHistoricList({
+        region: riotServer,
+        summonerName: riotSummonerName
+      })
   }, [rows, championsList, loginData, loadList])
 
-  console.log('lista aqui =>', championsList)
-
+  console.log(selfHistoricList)
   return (
     <StyledDashboard>
       <Banner
@@ -47,8 +56,27 @@ export function Dashboard() {
         id={data.ranked_summoner}
         selfHistoric={data.selfHistoric}
       />
-
-      <Grid item xs={1}></Grid>
+      <Grid container className="targett">
+        <Grid item md={6}>
+          <BannerHistoric>
+            <DataTable
+              columns={[
+                {value: 'typegame', label: 'Tipo de Jogo'},
+                {value: 'championName', label: 'Campeão'},
+              ]}
+              rows={selfHistoricList}
+              onClickRow={() => console.log('clicou na linha')}
+            />
+          </BannerHistoric>
+        </Grid>
+        <Grid item md={6}></Grid>
+      </Grid>
+      <Grid container>
+        <Grid item md={3}></Grid>
+        <Grid item md={9}></Grid>
+      </Grid>
+      
+     
       <Grid item xs={10} container-spacing={2} justifyContent='center'>
         <Box backgroundColor='#0AC8B9' item xs={5} display='flex' justifyContent='center'>
           
@@ -69,48 +97,13 @@ export function Dashboard() {
               rows={championsList}
             /> */}
           </BannerHistoric>
-          <BannerHistoric>
-            <DataTable
-              columns={[
-                {value: 'championIcon', label: 'Avatar'},
-                {value: 'championName', label: 'Name'},
-              ]}
-              rows={championsList}
-            />
-          </BannerHistoric>
+          
         </Box>     
       </Grid>
-      <Grid item xs={1}></Grid>
-
-      <Grid item xs={1}></Grid>
 
       <Box backgroundColor='#0AC8B9' item xs={5} display='flex' justifyContent='center'>
-          <BannerTopChamp></BannerTopChamp>
-          </Box> 
-
-      
-
-      {/* <DataTable
-        columns={[
-          { value: 'id', label: 'Inscrição'},
-          { value: 'name', label: 'Nome'}
-        ]}
-        rows={[
-          {
-            id: '1',
-            name: 'Fabi'
-          },
-          {
-            id: '2',
-            name: 'Thyenne'
-          },
-          {
-            id: '3',
-            name: 'Haus'
-          }
-        ]}
-      /> */}
-  
+        <BannerTopChamp></BannerTopChamp>
+      </Box>
     </StyledDashboard>
   );
 }

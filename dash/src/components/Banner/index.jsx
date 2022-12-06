@@ -28,14 +28,12 @@ const Banner = ({ avatar, summonerName, summonerLevel , id }) => {
  
     return (
     <StyledBanner>
-      
-      <Box backgroundColor="#0A323C"  borderRadius="4px" container-spacing={2} display='flex' alignContent='center' >
-              
+      <Box backgroundColor="#0A323C"  borderRadius="4px" container-spacing={2} display='flex' alignContent='center'>
               <Box display='flex' margin={10}>
               <Avatar
                 sizes='(max-width:480px)'
                 display="flex"
-                alt={'Avatar de  ${summonerName}'}
+                alt={`Avatar de  ${summonerName}`}
                 src={avatar}
                 className={classes.avatar} />
               </Box>

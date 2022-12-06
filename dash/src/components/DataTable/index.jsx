@@ -20,7 +20,7 @@ const useStyles = makeStyles({
   },
 });
 
-const DataTable = ({ rows, columns }) => {
+const DataTable = ({ rows, columns, onClickRow }) => {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -54,7 +54,7 @@ const DataTable = ({ rows, columns }) => {
           <TableBody>
             {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, rk) => {
               return (
-                <TableRow hover role="checkbox" tabIndex={-1} key={rk}>
+                <TableRow hover role="checkbox" tabIndex={-1} key={rk} onClick={onClickRow}>
                   {columns.map((column, colk) => {
                     const value = row[column.value];
                     return (

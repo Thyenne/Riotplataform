@@ -1,5 +1,6 @@
 import { createContext, useState } from "react";
 import { getChampions, getSelfHistory } from '../services/historic';
+import { serverList } from "./serverList";
 export const DashboardContext = createContext({})
 
 const DashboardContextProvider = ({ children }) => {
@@ -14,12 +15,14 @@ const DashboardContextProvider = ({ children }) => {
     })
     .catch(err => console.error(err))
   
-  const getSelfHistoricList = ({ server, name }) => getSelfHistory({ server, name })
+  const getSelfHistoricList = ({ region, summonerName }) => {
+    const continent = serverList.filter(item => item.value === region)[0].continent
+    return getSelfHistory({ continent, region, summonerName })
     .then(res => {
       setSelfHistoricList(res.data.summoner_historic)
       setLoadList(false)
     })
-    .catch(err => console.error(err))
+    .catch(err => console.error(err))}
 
   const value = {
     championsList,

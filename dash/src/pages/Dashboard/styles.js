@@ -8,4 +8,5 @@ export const StyledDashboard = styled.section`
   position: relative;
   padding: 20px 0;
   background-image: linear-gradient(#091428, #0A1428);
+  width: 100vw;
   `;
