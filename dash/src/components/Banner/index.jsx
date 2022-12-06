@@ -28,7 +28,9 @@ const Banner = ({ avatar, summonerName, summonerLevel , id }) => {
  
     return (
     <StyledBanner>
-      <Box backgroundColor="#0A1428"  borderRadius="4px" display='flex' margin={10} sx={{p:2, border:'2px solid #C89B3C'}} width='95%'>
+      <Box width='20%'></Box>
+      <Box backgroundColor="#010A13"  borderRadius="4px" display='flex' margin={10} sx={{p:2, border:'2px solid #C89B3C'}} width='70%'>
+          <Box display='flex' >
             <Box display='flex'>
               <Avatar
                 sizes='(max-width:480px)'
@@ -40,9 +42,9 @@ const Banner = ({ avatar, summonerName, summonerLevel , id }) => {
               <Box margin={10}>
                 <Box><Typography variant='h1' component='h2'>{summonerName}</Typography></Box>
                 <Box margin={2}><Typography variant='h3' component='h2'>Nível:{summonerLevel}</Typography></Box>
-                <Box sx={{p:2, border:'2px solid black '}} backgroundColor='#010A13' borderRadius='4px'>
+                <Box sx={{p:2, border:'2px solid black '}} backgroundColor='#0A1428' borderRadius='4px'>
                     <Box sx={{p:2, border:'2px solid black '}}>
-                      <Box ><Typography> Ranqueada solo</Typography></Box>
+                      <Box ><Typography variant='h4' component='h3'> Ranqueada Solo/Duo</Typography></Box>
                      <Box>Winrate: {id[0]['winRate']}</Box>
                      <Box>Vitórias: {id[0]['wins']}</Box>
                      <Box>Derrotas: {id[0]['losses']}</Box>  
@@ -55,9 +57,9 @@ const Banner = ({ avatar, summonerName, summonerLevel , id }) => {
                     </Box>
                   </Box>
             </Box>
-
+          </Box>
       </Box>
-    
+      <Box width='20%'></Box>
     </StyledBanner>
   );
 };

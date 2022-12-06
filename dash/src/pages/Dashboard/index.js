@@ -1,4 +1,4 @@
-import { Grid } from '@material-ui/core';
+import { Grid, Typography } from '@material-ui/core';
 import { Box } from '@mui/system';
 import { React, useContext, useEffect, useState } from 'react';
 import { Banner } from '../../components';
@@ -11,6 +11,7 @@ import { StyledDashboard } from './styles';
 import TokenIcon from '@mui/icons-material/Token';
 import DangerousIcon from '@mui/icons-material/Dangerous';
 
+
 export function Dashboard() {
   const [ columns, setColumns ] = useState([])
   const [rows, setRows] = useState([])
@@ -19,8 +20,8 @@ export function Dashboard() {
     championsList,
     loadList,
     getChampionsList,
-    //getSelfHistoricList,
-    //selfHistoricList
+    getSelfHistoricList,
+    selfHistoricList
    } = useContext(DashboardContext)
   const data = JSON.parse(window.localStorage.getItem('loginData'))
   
@@ -37,18 +38,18 @@ export function Dashboard() {
         setColumns(Object.keys(dataResults[0]))
         setRows(dataResults)
       })
-      // console.log(loginData, region, summonerName)
+
       loadList && getChampionsList({
         server: riotServer,
         name: riotSummonerName
       })
-     // getSelfHistoricList({
-      //  region: riotServer,
-      //  summonerName: riotSummonerName
-      //})
+      getSelfHistoricList({
+       region: riotServer,
+       summonerName: riotSummonerName
+     })
   }, [rows, championsList, loginData, loadList])
 
- // console.log(selfHistoricList)
+
   return (
     <StyledDashboard>
       <Banner
@@ -58,40 +59,41 @@ export function Dashboard() {
         id={data.ranked_summoner}
         
       />
-      <Grid item xs={12}>
-                <Box backgroundColor="#0A323C" margin={6} borderRadius="4px">
-                    <Box display='flex'>
-                        <Grid container-spacing={2}>
-                        <Box margin={5} display='flex'>
-                {/* TABLE DE CHAMPIONS AQUI  */}
-                <DataTable
-              columns={[
-                {value: 'championIcon', label: 'Campeão'},
-                {value: 'championName'},
-                {value: 'championLevelMaestry', label: 'Nível de Maestria'},
-                {value: 'championPoints', label:'Quantidade de Pontos'},
-                {value: 'nextLevel', label:'Pontos para Próximo Nível'},
-                {value: 'bau', label:'Baú',
-                renderCell: ({row: {bau}}) =>{
-                  return(
-                    <Box
-                    width="60%"
-                    m="0 auto"
-                    p="5px"
-                    display="flex"
-                    justifyContent="center"
-                    BackgroundColor="linear-gradient(#091428, #0A1428)"
-                    borderRaduis="4px"
-                    >
-                    {bau === "true" && <TokenIcon/>},
-                    {bau === "false" && <DangerousIcon/>}
-                    </Box>
-  )}
-              }]}
 
-              rows={championsList}
-              onClickRow={() => console.log('clicou na linha')}
-            />
+
+<Grid item xs={12}>
+  <Box backgroundColor="#010A13" margin={6} borderRadius="4px">
+    <Box display='flex'>
+      <Grid container-spacing={2}>
+        <Box margin={2} display='flex'>
+          {/* TABLE DE HISTÓRICO AQUI  */}
+          <DataTable
+        columns={[
+          {value: 'championIcon', label: 'Campeão'},
+          {value: 'championName'},
+          {value: 'championLevelMaestry', label: 'Nível de Maestria'},
+          {value: 'championPoints', label:'Quantidade de Pontos'},
+          {value: 'nextLevel', label:'Pontos para Próximo Nível'},
+          {value: 'bau', label:'Baú',
+            renderCell: ({row: {bau}}) =>{
+              return(
+                <Box
+                width="60%"
+                m="0 auto"
+                p="5px"
+                display="flex"
+                justifyContent="center"
+                BackgroundColor="linear-gradient(#091428, #0A1428)"
+                borderRaduis="4px">
+                {bau === "true" && <TokenIcon/>},
+                {bau === "false" && <DangerousIcon/>}
+                </Box>
+            )}
+        }]}
+
+        rows={championsList}
+        onClickRow={() => console.log('clicou na linha')}
+        />
                 </Box>  
                         </Grid>
                     </Box>
@@ -102,39 +104,43 @@ export function Dashboard() {
 
 
 
-            <Box backgroundColor="#0A323C" margin={6} borderRadius="4px">
-               <Box margin={5} padding={5} display='flex'>
-                {/* TABLE DE CHAMPIONS AQUI  */}
-                <DataTable
-              columns={[
-                {value: 'championIcon', label: 'Campeão'},
-                {value: 'championName'},
-                {value: 'championLevelMaestry', label: 'Nível de Maestria'},
-                {value: 'championPoints', label:'Quantidade de Pontos'},
-                {value: 'nextLevel', label:'Pontos para Próximo Nível'},
-                {value: 'bau', label:'Baú',
-                renderCell: ({row: {bau}}) =>{
-                  return(
-                    <Box
-                    width="60%"
-                    m="0 auto"
-                    p="5px"
-                    display="flex"
-                    justifyContent="center"
-                    BackgroundColor="linear-gradient(#091428, #0A1428)"
-                    borderRaduis="4px"
-                    >
-                    {bau === "true" && <TokenIcon/>},
-                    {bau === "false" && <DangerousIcon/>}
-                    </Box>
-  )}
-              }]}
 
-              rows={championsList}
+
+
+
+<Grid item xs={12}>
+  <Box backgroundColor="#010A13" margin={6} borderRadius="4px">
+    <Box display='flex'>
+      <Grid container-spacing={2}>
+        <Box margin={2} display='flex'>
+          {/* TABLE DE HISTÓRICO AQUI  */}
+          <DataTable
+            columns={[
+              {value:'win', label: 'Vitória'},
+              {value:'gameDuration', label: 'Duração do Jogo'},
+              {value:'championIcon'},
+              {value:'championName', label: 'Nome do Campeão'},
+              {value:'kills', label: 'Abates'},
+              {value:'deaths', label: 'Mortes'},
+              {value:'assists', label: 'Assistências'},
+              {value:'deaths', label: 'Mortes'},
+              {value:'kda', label: 'K/D/A'}
+              
+              ]}
+              rows={selfHistoricList}
               onClickRow={() => console.log('clicou na linha')}
             />
+                </Box>  
+                        </Grid>
+                    </Box>
                 </Box>
-      </Box>
+</Grid>
+
+
+
+
+
+           
     </StyledDashboard>
   );
 }

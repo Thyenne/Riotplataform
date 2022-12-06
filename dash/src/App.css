@@ -1,10 +1,17 @@
 .App {
   text-align: center;
+  display: flex;
+  position: relative;
 }
 
 .App-logo {
   height: 40vmin;
   pointer-events: none;
+}
+
+.content{
+  height: 100%;
+  width: 100%;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -40,4 +47,19 @@
 .body {
 
   background-color: black;
+}
+
+
+::-webkit-scrollbar{
+  width: 10 px;
+}
+
+::-webkit-scrollbar-track{
+  background: #e0e0e0;
+}
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+::-webkit-scrollbar-track:hover{
+  background: #555;
 }

@@ -16,14 +16,8 @@ const useStyles = makeStyles({
     width: '100%',
   },
   container: {
-    maxHeight: 440,
+    maxHeight: 500,
   },
-  rows:{
-    minHeight:'72px'
-  },
-  headCells:{ backgroundColor:'#C89B3C'
-
-  }
 });
 
 const DataTable = ({ rows, columns, onClickRow }) => {

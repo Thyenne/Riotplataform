@@ -1,8 +1,12 @@
+@font-face {
+  font-family: 'Spiegel';
+  src: local('Spiegel'), url(assets\fontes\Spiegel-TTF\Spiegel_TT_Regular.ttf) format('truetype');
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Spiegel'
+
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   

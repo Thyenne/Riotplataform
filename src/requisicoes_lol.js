@@ -70,7 +70,7 @@ async function get_list_match(puuid,continent)
     const server = continent ?? default_continent
     const url = "https://" + server + 
     ".api.riotgames.com/lol/match/v5/matches/by-puuid/" + 
-    puuid + "/ids?start=" + "0" + "&count=" + "20"
+    puuid + "/ids?start=" + "0" + "&count=" + "10"
 
     const matchIdResponde = await axios.get(url , { headers : { "X-Riot-Token": riotKey} })
     const result = matchIdResponde.data
@@ -279,7 +279,7 @@ async function get_summoner_historic(puuid, summonerName, continent)
                 "assists": match_data_participants[jk].assists,
                 "deaths": match_data_participants[jk].deaths,
                 "win": match_data_participants[jk].win,
-                "kda": match_data_participants[jk].challenges.kda,
+                "kda": match_data_participants[jk].challenges.kda.toFixed(2),
                 "lane": match_data_participants[jk].lane,
                 "championName": match_data_participants[jk].championName,             
                 "gameDuration": timest(match_data.info.gameDuration),
