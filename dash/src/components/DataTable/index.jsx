@@ -18,6 +18,12 @@ const useStyles = makeStyles({
   container: {
     maxHeight: 440,
   },
+  rows:{
+    minHeight:'72px'
+  },
+  headCells:{ backgroundColor:'#C89B3C'
+
+  }
 });
 
 const DataTable = ({ rows, columns, onClickRow }) => {
@@ -58,8 +64,8 @@ const DataTable = ({ rows, columns, onClickRow }) => {
                   {columns.map((column, colk) => {
                     const value = row[column.value];
                     return (
-                      <TableCell key={colk} align={'left'}>
-                        {value.endsWith('.png') ? <img src={value} /> : value }
+                      <TableCell key={colk} align={'center'}>
+                       {value.toString().endsWith('.png') ? <img src={value} /> : value }
                       </TableCell>
                     );
                   })}
