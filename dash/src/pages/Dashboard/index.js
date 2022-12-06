@@ -60,6 +60,8 @@ export function Dashboard() {
         
       />
 
+{/*BOX DE TOP CAMPEÕES */}
+
 
 <Grid item xs={12}>
   <Box backgroundColor="#010A13" margin={6} borderRadius="4px">
@@ -102,12 +104,7 @@ export function Dashboard() {
 
 
 
-
-
-
-
-
-
+{/*BOX DE HISTÓRICO */}
 <Grid item xs={12}>
   <Box backgroundColor="#010A13" margin={6} borderRadius="4px">
     <Box display='flex'>
