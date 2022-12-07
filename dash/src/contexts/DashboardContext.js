@@ -25,8 +25,7 @@ const DashboardContextProvider = ({ children }) => {
     })
     .catch(err => console.error(err))}
 
-    const getMatchList = ({ continent, region, summonerName, matchId }) => {
-      //const continent = serverList.filter(item => item.value === region)[0].continent
+    const getMatchList = ({ continent, region, summonerName, matchId }) => {      
       return getMatch({ continent, region, summonerName, matchId })
       .then(res => {
         setMatchList(res.data.historic)

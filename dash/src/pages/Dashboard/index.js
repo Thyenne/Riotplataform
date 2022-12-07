@@ -6,16 +6,15 @@ import { DataTable } from '../../components/DataTable';
 import { AuthContext, DashboardContext } from '../../contexts';
 import { getTopChamp } from '../../services/Topchampions';
 import { StyledDashboard } from './styles';
-import TokenIcon from '@mui/icons-material/Token';
-import DangerousIcon from '@mui/icons-material/Dangerous';
 import { Paper } from '@mui/material';
 import { DataChamp } from '../../components/DataChamp';
+import { DataPartida } from '../../components/DataPartida';
 
 
 export function Dashboard() {
   const [ columns, setColumns ] = useState([])
   const [rows, setRows] = useState([])
-  const { loginData, riotServer, riotSummonerName } = useContext(AuthContext)
+  const { loginData, riotServer, riotSummonerName, gameId } = useContext(AuthContext)
   const {
     championsList,
     loadList,
@@ -51,11 +50,11 @@ export function Dashboard() {
      })
       getMatchList({
        region: riotServer,
-       summonerName: riotSummonerName
+       summonerName: riotSummonerName,
       })
   }, [rows, championsList, loginData, loadList])
 
-{console.log(getMatchList)}
+
   return (
     <StyledDashboard>
       <Banner
@@ -69,7 +68,7 @@ export function Dashboard() {
 <Grid item xs={12}>
 <Box backgroundColor="#010A13" margin={6} borderRadius="15px" width="95%"  >
   <Paper sx={{bgcolor:'#010A13', borderRadius:'15px 15px 0 0' }} margin={6} borderRadius="20px" width='100%' marginLeft={10} elevate={5}>
-  <Box widht='100%' backgroundColor='#0A323C' borderRadius='15px 15px 0 0'textAlign='center'><Typography variant='h4' component='h4'>Histórico</Typography></Box>
+  <Box widht='100%' backgroundColor='#0A323C' borderRadius='15px 15px 0 0'textAlign='center'><Typography variant='h3' component='h3'>Histórico</Typography></Box>
     <Box display='flex'>
        <Box margin={2} display='flex' marginLeft={2}>
           {/* TABLE DE HISTÓRICO AQUI  */}
@@ -90,14 +89,16 @@ export function Dashboard() {
                 
                 ]}
                 rows={selfHistoricList}
-                onClickRow={() => console.log('clicou na linha')}
+                onClickRow={() => console.log('clicou na linha')
+
+              }
               />
           </Box>
 
         </Box>  
       
         <Box width='100%' display='flex' margin={2}>
-            <DataTable
+            <DataPartida
                
                 columns={[
                   {value:'win', label: 'Vitória' },
@@ -138,7 +139,7 @@ export function Dashboard() {
   
 
   <Paper sx={{bgcolor:'#010A13', margin:'25px', borderRadius:'15px 15px 0 0'}} margin={6}  width='95%' marginLeft={10} elevate={5}>
-  <Box widht='100%' backgroundColor='#0A323C' borderRadius='15px 15px 0 0' textAlign='center' ><Typography  variant='h4' component='h4'>Campeões</Typography></Box>
+  <Box widht='100%' backgroundColor='#0A323C' borderRadius='15px 15px 0 0' textAlign='center' ><Typography  variant='h3' component='h3'>Campeões</Typography></Box>
     <Box display='flex'>
       <Grid >
         <Box margin={4} marginLeft={'60%'}display='flex'  width="180%">
@@ -150,7 +151,8 @@ export function Dashboard() {
           {value: 'championLevelMaestry', label: 'Nível de Maestria'},
           {value: 'championPoints', label:'Quantidade de Pontos'},
           {value: 'nextLevel', label:'Pontos para Próximo Nível'},
-          {value: 'bau', label: 'Baú'} 
+          {value: 'bau', label: 'Baú'},
+           
         ]}
         
         rows={championsList}

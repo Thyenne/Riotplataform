@@ -8,24 +8,48 @@ import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import React from 'react';
+import TokenIcon from '@mui/icons-material/Token';
+import DangerousIcon from '@mui/icons-material/Dangerous';
+import Token from '@mui/icons-material/Token';
 
 
 
 const useStyles = makeStyles({
   root: {
-    
-    backgroundColor:'#C8AA6E',
-    border:'#C89B3C solid',
-    height:"100%",
-    
+
+    backgroundColor: '#C8AA6E',
+    border: '#C89B3C solid',
+    height: "100%",
+
 
   },
   container: {
-    maxHeight: 800, 
-  
-    
+    maxHeight: 800,
+
+
   },
 });
+
+  function returnRow(value) {
+    if (value !== null) {
+      if (typeof value === 'string') {
+        if (value.endsWith('.png')) {
+          return <img src={value} width='50px' height='50px' />
+        } else { return value }
+      }
+      if (typeof value === 'boolean') {
+        if (value) {
+          return <TokenIcon/>
+        } else {
+          return <DangerousIcon />
+        }
+      }
+      else {
+        return value
+      }
+    }
+  }
+
 
 const DataChamp = ({ rows, columns, onClickRow }) => {
   const classes = useStyles();
@@ -43,7 +67,7 @@ const DataChamp = ({ rows, columns, onClickRow }) => {
 
   return (
     <Paper className={classes.root} borderRadius="7px" width='100%'>
-      <TableContainer  className={classes.container}>
+      <TableContainer className={classes.container}>
         <Table stickyHeader aria-label="a dense table" size="small" borderCollapse="collapse" width='100%'>
           <TableHead>
             <TableRow>
@@ -51,8 +75,8 @@ const DataChamp = ({ rows, columns, onClickRow }) => {
                 <TableCell
                   key={ck}
                   align={'center'}
-                  style={{ color:'#C89B3C', backgroundColor:'#010A13' }}
-                  
+                  style={{ color: '#C89B3C', backgroundColor: '#010A13' }}
+
                 >
                   {column.label}
                 </TableCell>
@@ -62,13 +86,12 @@ const DataChamp = ({ rows, columns, onClickRow }) => {
           <TableBody >
             {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, rk) => {
               return (
-                <TableRow  tabIndex={-1} key={rk} onClick={onClickRow} >
+                <TableRow tabIndex={-1} key={rk} onClick={onClickRow} >
                   {columns.map((column, colk) => {
                     const value = row[column.value];
                     return (
                       <TableCell key={colk} align={'center'} color='#F0E6D2' >
-                       {value.toString().endsWith('.png') ? <img src={value} width='50px' height='50px' /> : value }
-                       
+                       {returnRow(value)}
                       </TableCell>
                     );
                   })}

@@ -1,13 +1,12 @@
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import { useTheme } from '@emotion/react';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import  HomeRounded  from '@mui/icons-material/HomeRounded';
-// import icone  from '../Lol.png';
+import {Typography} from '@mui/material';
 
 
 
@@ -39,8 +38,8 @@ const Header = ({  menuList }) => {
           
 
           {/*ICONES DIREITA */}
-
-          {/*<img src={icone} />*/}
+          <Typography component='h4' variant='h4' >Riot Way</Typography>
+          
           
         </Toolbar>
       </AppBar>

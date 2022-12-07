@@ -53,7 +53,7 @@ function returnRow(value) {
 
 
 
-const DataTable = ({ rows, columns, onClickRow }) => {
+const DataPartida = ({ rows, columns, onClickRow }) => {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(15);
@@ -116,4 +116,4 @@ const DataTable = ({ rows, columns, onClickRow }) => {
   );
 }
 
-export { DataTable };
+export { DataPartida };
