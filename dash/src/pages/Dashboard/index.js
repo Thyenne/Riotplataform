@@ -2,8 +2,6 @@ import { Grid, Typography } from '@material-ui/core';
 import { Box } from '@mui/system';
 import { React, useContext, useEffect, useState } from 'react';
 import { Banner } from '../../components';
-import { BannerHistoric } from '../../components/Bannerhistoric';
-import { BannerTopChamp } from '../../components/BannerTopChamp';
 import { DataTable } from '../../components/DataTable';
 import { AuthContext, DashboardContext } from '../../contexts';
 import { getTopChamp } from '../../services/Topchampions';
@@ -11,6 +9,7 @@ import { StyledDashboard } from './styles';
 import TokenIcon from '@mui/icons-material/Token';
 import DangerousIcon from '@mui/icons-material/Dangerous';
 import { Paper } from '@mui/material';
+import { DataChamp } from '../../components/DataChamp';
 
 
 export function Dashboard() {
@@ -66,53 +65,23 @@ export function Dashboard() {
         id={data.ranked_summoner}
       />
 
-{/*BOX DE TOP CAMPEÕES */}
-<Grid item xs={12}>
-  
-
-  <Paper sx={{bgcolor:'#010A13', margin:'25px', borderRadius:'15px 15px 0 0'}} margin={6}  width='90%' marginLeft={10} elevate={5}>
-  <Box widht='100%' backgroundColor='#0A323C' borderRadius='15px 15px 0 0' textAlign='center' ><Typography  variant='h4' component='h4'>Campeões</Typography></Box>
-    <Box display='flex'>
-      <Grid container-spacing={2}>
-        <Box margin={2} display='flex' marginLeft={8} width="150%">
-          {/* TABLE DE CAMPEÃO AQUI  */}
-          <DataTable
-        columns={[
-          {value: 'championIcon', label: 'Campeão'},
-          {value: 'championName'},
-          {value: 'championLevelMaestry', label: 'Nível de Maestria'},
-          {value: 'championPoints', label:'Quantidade de Pontos'},
-          {value: 'nextLevel', label:'Pontos para Próximo Nível'}  
-        ]}
-        
-        rows={championsList}
-        onClickRow={() => console.log('clicou na linha')}
-        />
-                </Box>  
-      </Grid>
-    </Box>
-  </Paper>
-
-</Grid>
-
-
-
 {/*BOX DE HISTÓRICO */}
 <Grid item xs={12}>
 <Box backgroundColor="#010A13" margin={6} borderRadius="15px" width="95%"  >
   <Paper sx={{bgcolor:'#010A13', borderRadius:'15px 15px 0 0' }} margin={6} borderRadius="20px" width='100%' marginLeft={10} elevate={5}>
-  <Box widht='100%' backgroundColor='#0A323C' borderRadius='15px 15px 0 0'textAlign='center'><Typography variant='h4' component='h4' >Histórico</Typography></Box>
+  <Box widht='100%' backgroundColor='#0A323C' borderRadius='15px 15px 0 0'textAlign='center'><Typography variant='h4' component='h4'>Histórico</Typography></Box>
     <Box display='flex'>
-       <Box margin={2} display='flex'>
+       <Box margin={2} display='flex' marginLeft={2}>
           {/* TABLE DE HISTÓRICO AQUI  */}
-          <Box width='750px' display='flex' margin={2}  >
+          <Box  display='flex' >
               <DataTable
+              
               
               columns={
                 [
-                {value:'championIcon',label: 'Campeão'},
-                {value:'championName'},
                 {value:'win', label: 'Vitória',  },
+                {value:'championIcon'},
+                {value:'championName'},
                 {value:'gameDuration', label: 'Duração' },
                 {value:'kills', label: 'Abates'},
                 {value:'assists', label: 'Assistências'},
@@ -127,26 +96,28 @@ export function Dashboard() {
 
         </Box>  
       
-        <Box width='750px' display='flex' margin={2}>
+        <Box width='100%' display='flex' margin={2}>
             <DataTable
+               
                 columns={[
                   {value:'win', label: 'Vitória' },
                   {value:'championIcon'},
-                  {value:'nome', label:'Nome do Jogador'},
-                  {value:'championName', label: 'Nome do Campeão'},
+                  {value:'nome', label:'Jogador'},
+                  {value:'championName', label: 'Campeão'},
+                  {value:'item0name', label: 'I1'},{value:'item0'},
+                  {value:'item1name', label: 'I2'},{value:'item1'}, 
+                  {value:'item2name', label: 'I3'},{value:'item2'},
+                  {value:'item3name', label: 'I4'},{value:'item3'},
+                  {value:'item4name', label: 'I5'},{value:'item4'},
+                  {value:'item5name', label: 'I6'},{value:'item5'},
+                  {value:'item6name', label: 'I7'},{value:'item6'},
+                  {value:'spell1name', label: 'F1'},{value:'spell1'},
+                  {value:'spell2name', label: 'F2'},{value:'spell2'},
                   {value:'kills', label: 'Abates'},
                   {value:'deaths', label: 'Mortes'},
                   {value:'assists', label: 'Assistências'},
-                  {value:'deaths', label: 'Mortes'},
-                  {value:'item0name', label: 'Item 1'},{value:'item0'},
-                  {value:'item1name', label: 'Item 2'},{value:'item1'}, 
-                  {value:'item2name', label: 'Item 3'},{value:'item2'},
-                  {value:'item3name', label: 'Item 4'},{value:'item3'},
-                  {value:'item4name', label: 'Item 5'},{value:'item4'},
-                  {value:'item5name', label: 'Item 6'},{value:'item5'},
-                  {value:'item6name', label: 'Item 7'},{value:'item6'},
-                  {value:'spell1name', label: 'Feitiço 1'},{value:'spell1'},
-                  {value:'spell2name', label: 'Feitiço 2'},{value:'spell2'}
+                  {value:'deaths', label: 'Mortes'}
+
                   
                   ]}
                   rows={matchList}
@@ -160,7 +131,42 @@ export function Dashboard() {
   </Paper>
   </Box>
 </Grid>
-           
+
+
+{/*BOX DE TOP CAMPEÕES */}
+<Grid item xs={12}>
+  
+
+  <Paper sx={{bgcolor:'#010A13', margin:'25px', borderRadius:'15px 15px 0 0'}} margin={6}  width='95%' marginLeft={10} elevate={5}>
+  <Box widht='100%' backgroundColor='#0A323C' borderRadius='15px 15px 0 0' textAlign='center' ><Typography  variant='h4' component='h4'>Campeões</Typography></Box>
+    <Box display='flex'>
+      <Grid >
+        <Box margin={4} marginLeft={'60%'}display='flex'  width="180%">
+          {/* TABLE DE CAMPEÃO AQUI  */}
+          <DataChamp 
+        columns={[
+          {value: 'championIcon', label: 'Campeão'},
+          {value: 'championName'},
+          {value: 'championLevelMaestry', label: 'Nível de Maestria'},
+          {value: 'championPoints', label:'Quantidade de Pontos'},
+          {value: 'nextLevel', label:'Pontos para Próximo Nível'},
+          {value: 'bau', label: 'Baú'} 
+        ]}
+        
+        rows={championsList}
+        onClickRow={() => console.log('clicou na linha')}
+        />
+      </Box>  
+      </Grid>
+    </Box>
+  </Paper>
+
+</Grid>
+
+
+
+
+
     </StyledDashboard>
   );
 }

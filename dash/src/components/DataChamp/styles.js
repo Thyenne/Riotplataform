@@ -1,6 +1,6 @@
 import styled from "styled-components"
 
-export const StyledDataTable = styled.div`
+export const StyledDataChamp = styled.div`
   position: relative;
   
 `

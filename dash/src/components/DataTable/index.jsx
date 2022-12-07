@@ -13,17 +13,25 @@ import React from 'react';
 
 const useStyles = makeStyles({
   root: {
-    width: '100%',
+    
+    backgroundColor:'#C8AA6E',
+    border:'#C89B3C solid',
+    height:"100%",
+    padding:"0",
+    responsive: true
+
   },
   container: {
-    maxHeight: 500,
+    maxHeight: 700, 
+    maxWidth:970,
+    
   },
 });
 
 const DataTable = ({ rows, columns, onClickRow }) => {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [rowsPerPage, setRowsPerPage] = React.useState(15);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -37,14 +45,14 @@ const DataTable = ({ rows, columns, onClickRow }) => {
   return (
     <Paper className={classes.root} borderRadius="4px">
       <TableContainer  className={classes.container}>
-        <Table stickyHeader aria-label="sticky table">
+        <Table stickyHeader aria-label="a dense table" size="small" borderCollapse="collapse">
           <TableHead>
             <TableRow>
               {columns.map((column, ck) => (
                 <TableCell
                   key={ck}
                   align={'center'}
-                  style={{ minWidth: 150 }}
+                  style={{ minWidth: 0, color:'#C89B3C', backgroundColor:'#010A13' }}
                   
                 >
                   {column.label}
@@ -52,15 +60,15 @@ const DataTable = ({ rows, columns, onClickRow }) => {
               ))}
             </TableRow>
           </TableHead>
-          <TableBody>
+          <TableBody >
             {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, rk) => {
               return (
                 <TableRow  tabIndex={-1} key={rk} onClick={onClickRow} >
                   {columns.map((column, colk) => {
                     const value = row[column.value];
                     return (
-                      <TableCell key={colk} align={'center'} >
-                       {value.toString().endsWith('.png') ? <img src={value} /> : value }
+                      <TableCell key={colk} align={'center'} color='#F0E6D2' >
+                       {value.toString().endsWith('.png') ? <img src={value} width='50px' height='50px' /> : value }
                        
                       </TableCell>
                     );
@@ -72,7 +80,7 @@ const DataTable = ({ rows, columns, onClickRow }) => {
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
+        rowsPerPageOptions={[15, 25, 100]}
         component="div"
         count={rows.length}
         rowsPerPage={rowsPerPage}

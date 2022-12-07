@@ -124,7 +124,7 @@ function timest(segundos){
     const h = segundos/ 3600
     const m = (segundos % 3600) / 60
     const s = (segundos % 3600) % 60
-    const t = parseInt(h) + ":" + parseInt(m) + ":" + parseInt(s)
+    const t =  parseInt(m) + ":" + parseInt(s)
     return t
 }
 

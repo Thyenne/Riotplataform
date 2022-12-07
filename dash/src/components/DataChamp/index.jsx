@@ -13,17 +13,24 @@ import React from 'react';
 
 const useStyles = makeStyles({
   root: {
-    width: '50%',
+    
+    backgroundColor:'#C8AA6E',
+    border:'#C89B3C solid',
+    height:"100%",
+    
+
   },
   container: {
-    maxHeight: 500,
+    maxHeight: 800, 
+  
+    
   },
 });
 
-const DataHistoric = ({ rows, columns, onClickRow }) => {
+const DataChamp = ({ rows, columns, onClickRow }) => {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [rowsPerPage, setRowsPerPage] = React.useState(15);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -35,31 +42,33 @@ const DataHistoric = ({ rows, columns, onClickRow }) => {
   };
 
   return (
-    <Paper className={classes.root} borderRadius="4px">
-      <TableContainer className={classes.container}>
-        <Table stickyHeader aria-label="sticky table">
+    <Paper className={classes.root} borderRadius="7px" width='100%'>
+      <TableContainer  className={classes.container}>
+        <Table stickyHeader aria-label="a dense table" size="small" borderCollapse="collapse" width='100%'>
           <TableHead>
             <TableRow>
               {columns.map((column, ck) => (
                 <TableCell
                   key={ck}
                   align={'center'}
-                  style={{ minWidth: 170 }}
+                  style={{ color:'#C89B3C', backgroundColor:'#010A13' }}
+                  
                 >
                   {column.label}
                 </TableCell>
               ))}
             </TableRow>
           </TableHead>
-          <TableBody>
+          <TableBody >
             {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, rk) => {
               return (
-                <TableRow  tabIndex={-1} key={rk} onClick={onClickRow}>
+                <TableRow  tabIndex={-1} key={rk} onClick={onClickRow} >
                   {columns.map((column, colk) => {
                     const value = row[column.value];
                     return (
-                      <TableCell key={colk} align={'center'}>
-                       {value.toString().endsWith('.png') ? <img src={value} /> : value }
+                      <TableCell key={colk} align={'center'} color='#F0E6D2' >
+                       {value.toString().endsWith('.png') ? <img src={value} width='50px' height='50px' /> : value }
+                       
                       </TableCell>
                     );
                   })}
@@ -70,7 +79,7 @@ const DataHistoric = ({ rows, columns, onClickRow }) => {
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
+        rowsPerPageOptions={[15, 25, 100]}
         component="div"
         count={rows.length}
         rowsPerPage={rowsPerPage}
@@ -82,4 +91,4 @@ const DataHistoric = ({ rows, columns, onClickRow }) => {
   );
 }
 
-export { DataHistoric };
+export { DataChamp };
