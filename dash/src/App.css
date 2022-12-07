@@ -14,6 +14,18 @@
   width: 100%;
 }
 
+@font-face {
+  font-family: 'Siegel';
+  src: url('assets\fontes\Spiegel-TTF\Spiegel_TT_Regular.ttf') format('truetype'),
+  url('assets\fontes\Spiegel-TTF\Spiegel_TT_Regular_Italic') format('truetype');
+}
+
+@font-face {
+  font-family: 'BeaufortforLOL' ;
+  src: url('assets\fontes\BeaufortForLoL-TTF\BeaufortforLOL-Heavy.ttf') format('trutetype'), 
+  url('assets\fontes\BeaufortForLoL-TTF\BeaufortforLOL-Regular.ttf') format('truetype');
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
@@ -45,7 +57,7 @@
 }
 
 .body {
-
+  font-family: 'Siegel';
   background-color: black;
 }
 
@@ -58,8 +70,8 @@
   background: #e0e0e0;
 }
 ::-webkit-scrollbar-thumb {
-  background: #888;
+  background: #101010;
 }
 ::-webkit-scrollbar-track:hover{
-  background: #555;
+  background: #2c2c2c;
 }

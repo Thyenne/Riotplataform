@@ -1,12 +1,15 @@
 import { createTheme } from '@mui/material/styles';
 
+
 export const theme = createTheme({
+
   palette: {
     background: {
-        default: "#010a13",
-        allVariants: "#222222",
-        main: "#222222",
-        color:"010A13"
+        primary: '#091428',
+        default: "#F0E6D2",
+        allVariants: "#F0E6D2",
+        main: "#F0E6D2",
+        color:"F0E6D2"
     },
     text: {
       primary: "#F0E6D2",
@@ -14,7 +17,7 @@ export const theme = createTheme({
     }
   },
   background: {
-    color: "#010A13"
+    color: "#F0E6D2"
   },
   typography: {
     allVariants: {
@@ -37,9 +40,11 @@ export const theme = createTheme({
     },
     h6: {
       color: '#F0E6D2'
-    }
+    }}
   }
-});
+)
+  
+  
 // createTheme({
 //   palette: {
 //     primary: {

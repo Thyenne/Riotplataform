@@ -13,14 +13,14 @@ import React from 'react';
 
 const useStyles = makeStyles({
   root: {
-    width: '100%',
+    width: '50%',
   },
   container: {
     maxHeight: 500,
   },
 });
 
-const DataTable = ({ rows, columns, onClickRow }) => {
+const DataHistoric = ({ rows, columns, onClickRow }) => {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -36,7 +36,7 @@ const DataTable = ({ rows, columns, onClickRow }) => {
 
   return (
     <Paper className={classes.root} borderRadius="4px">
-      <TableContainer  className={classes.container}>
+      <TableContainer className={classes.container}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
@@ -44,8 +44,7 @@ const DataTable = ({ rows, columns, onClickRow }) => {
                 <TableCell
                   key={ck}
                   align={'center'}
-                  style={{ minWidth: 150 }}
-                  
+                  style={{ minWidth: 170 }}
                 >
                   {column.label}
                 </TableCell>
@@ -55,13 +54,12 @@ const DataTable = ({ rows, columns, onClickRow }) => {
           <TableBody>
             {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, rk) => {
               return (
-                <TableRow  tabIndex={-1} key={rk} onClick={onClickRow} >
+                <TableRow  tabIndex={-1} key={rk} onClick={onClickRow}>
                   {columns.map((column, colk) => {
                     const value = row[column.value];
                     return (
-                      <TableCell key={colk} align={'center'} >
+                      <TableCell key={colk} align={'center'}>
                        {value.toString().endsWith('.png') ? <img src={value} /> : value }
-                       
                       </TableCell>
                     );
                   })}
@@ -84,4 +82,4 @@ const DataTable = ({ rows, columns, onClickRow }) => {
   );
 }
 
-export { DataTable };
+export { DataHistoric };

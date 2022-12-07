@@ -1,10 +1,10 @@
 import { selfApi } from "../selfApi"
 
 const getMatch = async ({ server, name }) => {
-  return await selfApi.get(`/${continent}/${region}/summoner/${name}/match/${mathId}`)
+  return await selfApi.get(`/${continent}/${region}/${name}/match/${mathId}`)
 }
 
-export { geth }
+export { getMatch }
 
 
 

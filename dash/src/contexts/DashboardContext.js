@@ -1,11 +1,12 @@
 import { createContext, useState } from "react";
-import { getChampions, getSelfHistory } from '../services/historic';
+import { getChampions, getSelfHistory, getMatch } from '../services/historic';
 import { serverList } from "./serverList";
 export const DashboardContext = createContext({})
 
 const DashboardContextProvider = ({ children }) => {
   const [championsList, setChampionsList] = useState([])
   const [selfHistoricList, setSelfHistoricList] = useState([])
+  const [matchList, setMatchList] = useState([])
   const [loadList, setLoadList] = useState(true)
   
   const getChampionsList = ({ server, name }) => getChampions({ server, name })
@@ -24,12 +25,23 @@ const DashboardContextProvider = ({ children }) => {
     })
     .catch(err => console.error(err))}
 
+    const getMatchList = ({ continent, region, summonerName, matchId }) => {
+      //const continent = serverList.filter(item => item.value === region)[0].continent
+      return getMatch({ continent, region, summonerName, matchId })
+      .then(res => {
+        setMatchList(res.data.historic)
+        setLoadList(false)
+      })
+      .catch(err => console.error(err))}
+
   const value = {
     championsList,
     selfHistoricList,
+    matchList,
     loadList,
     getChampionsList,
-    getSelfHistoricList
+    getSelfHistoricList,
+    getMatchList
   }
 
   return (
