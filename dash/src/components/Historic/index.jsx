@@ -12,8 +12,8 @@ const Historic = ({rows, data}) =>{
 
     return(
         <StyledHistoric>
-        <Box m='20px'>
-            <Box m="40px 0 0 0" height="75vh">
+        <Box>
+            <Box height="75vh">
           
             </Box>
         </Box>

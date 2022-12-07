@@ -5,4 +5,5 @@ export const StyledBanner = styled(Box)`
   position: relative;
   display: flex;
   alignContent: center;
+  width:100%
 `

@@ -142,7 +142,7 @@ export function Dashboard() {
   <Box widht='100%' backgroundColor='#0A323C' borderRadius='15px 15px 0 0' textAlign='center' ><Typography  variant='h3' component='h3'>Campeões</Typography></Box>
     <Box display='flex'>
       <Grid >
-        <Box margin={4} marginLeft={'60%'}display='flex'  width="180%">
+        <Box margin={4} marginLeft={'60%'}display='flex'  width="100%">
           {/* TABLE DE CAMPEÃO AQUI  */}
           <DataChamp 
         columns={[
