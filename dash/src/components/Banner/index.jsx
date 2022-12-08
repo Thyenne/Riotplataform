@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import { StyledBanner } from './styles';
 import { Box, Paper } from '@mui/material';
 import { theme } from '../../utils/theme';
-import { PieChart } from '../PieChart';
+//import { PieChart } from '../PieChart';
 import {validarElo} from '../RankedIcons';
 import {ThemeProvider } from '@mui/material/styles';
 

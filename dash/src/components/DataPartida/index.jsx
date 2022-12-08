@@ -56,7 +56,7 @@ function returnRow(value) {
 const DataPartida = ({ rows, columns, onClickRow }) => {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(15);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -104,7 +104,7 @@ const DataPartida = ({ rows, columns, onClickRow }) => {
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[15, 25, 100]}
+        rowsPerPageOptions={[10]}
         component="div"
         count={rows.length}
         rowsPerPage={rowsPerPage}

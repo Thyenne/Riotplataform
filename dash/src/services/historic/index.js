@@ -5,13 +5,18 @@ const getChampions = async ({ server, name }) => await selfApi.get(`/${server}/$
 const getSelfHistory = async ({ continent, region, summonerName }) => 
   await selfApi.get(`/${continent}/${region}/${summonerName}/selfHistoric`)
 
-const getMatch = async ({ continent, region, name, matchId }) => {
-  await selfApi.get(`/${continent}/${region}/${name}/match/${matchId}`)
-}
+const getMatch = async ({ continent, region, summonerName}) => 
+  await selfApi.get(`/${continent}/${region}/${summonerName}/match`)
+
+function getClickMatch(matchId){ 
+  return async ({ continent, region, summonerName}) => 
+await selfApi.get(`/${continent}/${region}/${summonerName}/match/${matchId}`) }
+
 export {
   getChampions,
   getSelfHistory,
-  getMatch
+  getMatch,
+  getClickMatch
 }
 
 

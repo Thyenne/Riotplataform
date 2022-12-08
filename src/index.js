@@ -91,13 +91,13 @@ async function main(){
     
         //Função de try catch para todas as variaveis que importam funções do modulo de requisições
 
-    app.get('/:continent/:region/:summonerName/match/:matchId', async (req,res) => { 
+    app.get('/:continent/:region/:summonerName/match', async (req,res) => { 
         try{  
-            const {summonerName, continent, region, matchId} = req.params
+            const {summonerName, continent, region} = req.params
            
             const summonerData = await appLol.getSummonerData(summonerName,region)  
             
-            const historic = await appLol.get_historic(summonerData.puuid,continent,matchId)
+            const historic = await appLol.get_historic(summonerData.puuid,continent)
 
             return res.status(200).json({
                 historic

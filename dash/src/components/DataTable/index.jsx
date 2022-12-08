@@ -10,7 +10,7 @@ import TableRow from '@material-ui/core/TableRow';
 import React from 'react';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import IndeterminateCheckBoxIcon from '@mui/icons-material/IndeterminateCheckBox';
-
+import {Button} from '@mui/material'
 
 
 const useStyles = makeStyles({
@@ -37,6 +37,9 @@ function returnRow(value) {
       if (value.endsWith('.png')) {
         return <img src={value} width='50px' height='50px' />
       } else { return value }
+    //if(value.startsWith('BR1_')) {
+      //return <Details matchId={this.state.matchId}/>  
+    //}
     }
     if (typeof value === 'boolean') {
       if (value) { 

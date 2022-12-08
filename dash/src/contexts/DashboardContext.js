@@ -19,19 +19,20 @@ const DashboardContextProvider = ({ children }) => {
   const getSelfHistoricList = ({ region, summonerName }) => {
     const continent = serverList.filter(item => item.value === region)[0].continent
     return getSelfHistory({ continent, region, summonerName })
-    .then(res => {
+    .then(res => { console.log(res, "bbb")
       setSelfHistoricList(res.data.summoner_historic)
       setLoadList(false)
     })
     .catch(err => console.error(err))}
 
-    const getMatchList = ({ continent, region, summonerName, matchId }) => {      
-      return getMatch({ continent, region, summonerName, matchId })
-      .then(res => {
-        setMatchList(res.data.historic)
-        setLoadList(false)
-      })
-      .catch(err => console.error(err))}
+  const getMatchList = ({ region, summonerName }) => {      
+    const continent = serverList.filter(item => item.value === region)[0].continent
+    return getMatch({ continent, region, summonerName })
+    .then(res => { console.log(res, 'ccc')
+      setMatchList(res.data.historic)
+      setLoadList(false)
+    })
+    .catch(err => console.error(err))}
 
   const value = {
     championsList,

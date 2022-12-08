@@ -133,13 +133,107 @@ Função que retorna dados filtrados de todos os jogadores de uma partida
 Input: PuuID, Continente e Número da partida da lista de partidas
 Output: Histórico de uma partida
 */
-async function get_historic(puuid, continent,i)
+async function get_historic(puuid, continent)
 {
-    
+    function runasicon(x)
+    {
+        for (var l = 0; l < runas.length; l++)
+        {
+            if (x == runas[l].id)
+            {
+                return runas[l].icon
+            }
+                
+        }
+             
+    }
+
+    function runasname(x)
+    {
+        for (var l = 0; l < runas.length; l++)
+        {
+            if (x == runas[l].id)
+            {
+                return runas[l].key
+            }
+                
+        }
+             
+    }
+
+    function icon_spells(x)
+    {
+        for (var l of Object.keys(spells.data))
+        {
+            if (x == spells.data[l].key)
+            {
+                return spells.data[l].id
+            }
+                    
+        }     
+    }
+
+    function name_spells(x)
+    {
+        for (var l of Object.keys(spells.data))
+        {
+            if (x == spells.data[l].key)
+            {
+                return spells.data[l].name
+            }
+                    
+        }     
+    }
+
+    function itemname(x)
+    {
+        for (var l of Object.keys(item.data))
+        {
+            if (x == l)
+            {
+                return item.data[l].name
+            }      
+        }     
+    }
+
+    var listap = []
+
+    const listajogo = await get_list_match(puuid, continent)
+
+    for (var k = 0; k < listajogo.length; k++)
+    {
+        const match_data = await get_match_data_participants(continent, listajogo[k])
+        const match_data_participants = match_data.info.participants
+
+        for (var jk = 0; jk < match_data_participants.length; jk++)
+        {
+            {
+                let meu_participante = {
+                //"gameId": match_data.metadata.matchId,
+                //"typegame": get_type_game(match_data),
+                "kills": match_data_participants[jk].kills,
+                "assists": match_data_participants[jk].assists,
+                "deaths": match_data_participants[jk].deaths,
+                "win": match_data_participants[jk].win,
+                "kda": match_data_participants[jk].challenges.kda.toFixed(2),
+                "lane": match_data_participants[jk].lane,
+                "championName": match_data_participants[jk].championName,
+                "gameDuration": timest(match_data.info.gameDuration),
+                "championIcon": champion_Icon + match_data_participants[jk].championName + ".png"
+
+            }
+                listap.push(meu_participante)
+            }
+        }
+    }
+    return listap
+}
+/*
     const listajogo = await get_list_match(puuid,continent)
     const match_data = await get_match_data_participants(continent, listajogo[listajogo.findIndex(j => j === i)])
-    
+
     const match_data_participants = match_data.info.participants
+
 
     function runasicon(x)
     {
@@ -202,6 +296,9 @@ async function get_historic(puuid, continent,i)
         }     
     }
 
+    
+
+    
     const gameDuration = "gameDuration: " + timest(match_data.info.gameDuration)
 
     const listaParticipantes = match_data_participants.map((participante) => ({
@@ -251,7 +348,7 @@ async function get_historic(puuid, continent,i)
     
     return [gameDuration, listaParticipantes]
 }
-
+*/
 
 /*
 Função que retorna dados filtrados de uma partida do jogador 
@@ -259,21 +356,21 @@ Input: PuuID, Nome do jogador e Continente
 Output: Mini histórico do jogador da partida solicitada
 */
 async function get_summoner_historic(puuid, summonerName, continent)
-{  
+{
     var listap = []
-    
+
     const listajogo = await get_list_match(puuid, continent)
 
     for (var k = 0; k < listajogo.length; k++)
     {
         const match_data = await get_match_data_participants(continent, listajogo[k])
         const match_data_participants = match_data.info.participants
-        
+
         for (var jk = 0; jk < match_data_participants.length; jk++)
         {
             if (summonerName == match_data_participants[jk].summonerName){
                 let meu_participante = {
-                "gameId": match_data.metadata.matchId,
+                //"gameId": match_data.metadata.matchId,
                 "typegame": get_type_game(match_data),
                 "kills": match_data_participants[jk].kills,
                 "assists": match_data_participants[jk].assists,
@@ -281,13 +378,13 @@ async function get_summoner_historic(puuid, summonerName, continent)
                 "win": match_data_participants[jk].win,
                 "kda": match_data_participants[jk].challenges.kda.toFixed(2),
                 "lane": match_data_participants[jk].lane,
-                "championName": match_data_participants[jk].championName,             
+                "championName": match_data_participants[jk].championName,
                 "gameDuration": timest(match_data.info.gameDuration),
                 "championIcon": champion_Icon + match_data_participants[jk].championName + ".png"
-                
+
             }
                 listap.push(meu_participante)
-            }  
+            }
         }
     }
     return listap

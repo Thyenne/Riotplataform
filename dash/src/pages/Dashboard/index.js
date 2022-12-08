@@ -9,12 +9,13 @@ import { StyledDashboard } from './styles';
 import { Paper } from '@mui/material';
 import { DataChamp } from '../../components/DataChamp';
 import { DataPartida } from '../../components/DataPartida';
-
+import { getMatch, getSelfHistory, getClickMatch } from '../../services/historic';
 
 export function Dashboard() {
   const [ columns, setColumns ] = useState([])
   const [rows, setRows] = useState([])
-  const { loginData, riotServer, riotSummonerName, gameId } = useContext(AuthContext)
+  const [matchId, setMatchId] = useState([])
+  const { loginData, riotServer, riotSummonerName } = useContext(AuthContext)
   const {
     championsList,
     loadList,
@@ -26,7 +27,6 @@ export function Dashboard() {
    } = useContext(DashboardContext)
   const data = JSON.parse(window.localStorage.getItem('loginData'))
   
- 
 
   
   useEffect((region, summonerName) => {
@@ -46,15 +46,18 @@ export function Dashboard() {
       })
       getSelfHistoricList({
        region: riotServer,
-       summonerName: riotSummonerName
+       summonerName: riotSummonerName,
+       
      })
       getMatchList({
        region: riotServer,
        summonerName: riotSummonerName,
+       //matchId: matchId
+       
       })
   }, [rows, championsList, loginData, loadList])
 
-
+  //console.log(matchId, 'dddddd')
   return (
     <StyledDashboard>
       <Banner
@@ -85,22 +88,33 @@ export function Dashboard() {
                 {value:'kills', label: 'Abates'},
                 {value:'assists', label: 'Assistências'},
                 {value:'deaths', label: 'Mortes'},
-                {value:'kda', label: 'K/D/A'}
-                
+                {value:'kda', label: 'K/D/A'},
+                {value:'gameId'}
                 ]}
                 rows={selfHistoricList}
-                onClickRow={() => console.log('clicou na linha')
+                //onClickRow={addMatch('gameId')}
+                //onClickRow={() => getMatchList({'br1','Haus of Dereon',"BR1_2639475681"}}
 
-              }
+              
               />
           </Box>
 
         </Box>  
       
         <Box width='100%' display='flex' margin={2}>
+          
             <DataPartida
                
                 columns={[
+                {value:'win', label: 'Vitória',  },
+                {value:'championIcon'},
+                {value:'championName'},
+                {value:'gameDuration', label: 'Duração' },
+                {value:'kills', label: 'Abates'},
+                {value:'assists', label: 'Assistências'},
+                {value:'deaths', label: 'Mortes'},
+                {value:'kda', label: 'K/D/A'}
+                  /*
                   {value:'win', label: 'Vitória' },
                   {value:'championIcon'},
                   {value:'nome', label:'Jogador'},
@@ -117,12 +131,13 @@ export function Dashboard() {
                   {value:'kills', label: 'Abates'},
                   {value:'deaths', label: 'Mortes'},
                   {value:'assists', label: 'Assistências'},
-                  {value:'deaths', label: 'Mortes'}
+                  {value:'deaths', label: 'Mortes'}*/
 
                   
                   ]}
                   rows={matchList}
                   onClickRow={() => console.log('clicou na linha')}
+                  
             />
           </Box>
         
