@@ -219,8 +219,38 @@ async function get_historic(puuid, continent)
                 "lane": match_data_participants[jk].lane,
                 "championName": match_data_participants[jk].championName,
                 "gameDuration": timest(match_data.info.gameDuration),
-                "championIcon": champion_Icon + match_data_participants[jk].championName + ".png"
+                "championIcon": champion_Icon + match_data_participants[jk].championName + ".png",
+                'gold': match_data_participants[jk].goldEarned,
+                'minions': match_data_participants[jk].totalMinionsKilled + match_data_participants[jk].neutralMinionsKilled,
+                'nome': match_data_participants[jk].summonerName,
+                'damage': match_data_participants[jk].totalDamageDealtToChampions,
+                'typegame': get_type_game(match_data),
+            
+                //runas
+                'rune': data.runas_Icon + runasicon(match_data_participants[jk].perks.styles[0].style),
+                'rune_name': runasname(match_data_participants[jk].perks.styles[0].style),
 
+                //itens
+                'item0': data.item_Icon + match_data_participants[jk].item0 + ".png",
+                'item0name': itemname(match_data_participants[jk].item0),
+                'item1': data.item_Icon + match_data_participants[jk].item1 + ".png",
+                'item1name': itemname(match_data_participants[jk].item1),
+                'item2': data.item_Icon + match_data_participants[jk].item2 + ".png",
+                'item2name': itemname(match_data_participants[jk].item2),
+                'item3': data.item_Icon + match_data_participants[jk].item3 + ".png",
+                'item3name': itemname(match_data_participants[jk].item3),
+                'item4': data.item_Icon + match_data_participants[jk].item4 + ".png",
+                'item4name': itemname(match_data_participants[jk].item4),
+                'item5': data.item_Icon + match_data_participants[jk].item5 + ".png",
+                'item5name': itemname(match_data_participants[jk].item5),
+                'item6': data.item_Icon + match_data_participants[jk].item6 + ".png",
+                'item6name': itemname(match_data_participants[jk].item6),
+
+                //feitiços de invocador
+                'spell1': data.spells_Icon + icon_spells(match_data_participants[jk].summoner1Id) + ".png",
+                'spell1name': name_spells(match_data_participants[jk].summoner1Id), 
+                'spell2': data.spells_Icon + icon_spells(match_data_participants[jk].summoner2Id) + ".png",
+                'spell2name': name_spells(match_data_participants[jk].summoner2Id)
             }
                 listap.push(meu_participante)
             }

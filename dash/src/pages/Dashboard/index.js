@@ -69,11 +69,11 @@ export function Dashboard() {
 
 {/*BOX DE HISTÓRICO */}
 <Grid item xs={12}>
-<Box backgroundColor="#010A13" margin={6} borderRadius="15px" width="95%"  >
+<Box backgroundColor="#010A13" marginTop={5} borderRadius="15px" width="100%"  >
   <Paper sx={{bgcolor:'#010A13', borderRadius:'15px 15px 0 0' }} margin={6} borderRadius="20px" width='100%' marginLeft={10} elevate={5}>
   <Box widht='100%' backgroundColor='#0A323C' borderRadius='15px 15px 0 0'textAlign='center'><Typography variant='h3' component='h3'>Histórico</Typography></Box>
     <Box display='flex'>
-       <Box margin={2} display='flex' marginLeft={2}>
+       <Box margin={2} display='blocked' marginLeft={5}>
           {/* TABLE DE HISTÓRICO AQUI  */}
           <Box  display='flex' >
               <DataTable
@@ -101,20 +101,32 @@ export function Dashboard() {
 
         </Box>  
       
-        <Box width='100%' display='flex' margin={2}>
+        <Box width='50%' display='flex' margin={2}>
           
             <DataPartida
                
                 columns={[
                 {value:'win', label: 'Vitória',  },
-                {value:'championIcon'},
+                {value:'nome', label: 'Invocador'},
+                {value:'championIcon', label:'Campeão'}, 
                 {value:'championName'},
                 {value:'gameDuration', label: 'Duração' },
                 {value:'kills', label: 'Abates'},
                 {value:'assists', label: 'Assistências'},
                 {value:'deaths', label: 'Mortes'},
-                {value:'kda', label: 'K/D/A'}
-                  /*
+                {value:'kda', label: 'K/D/A'},
+                {value:'item0name', label: 'I1'},{value:'item0'},
+                {value:'item1name', label: 'I2'},{value:'item1'}, 
+                {value:'item2name', label: 'I3'},{value:'item2'},
+                {value:'item3name', label: 'I4'},{value:'item3'},
+                {value:'item4name', label: 'I5'},{value:'item4'},
+                {value:'item5name', label: 'I6'},{value:'item5'},
+                {value:'item6name', label: 'I7'},{value:'item6'},
+                {value:'spell1name', label: 'F1'},{value:'spell1'},
+                {value:'spell2name', label: 'F2'},{value:'spell2'},
+                {value:'rune', label: 'R1'},{value:'rune_name'},
+                
+                /*
                   {value:'win', label: 'Vitória' },
                   {value:'championIcon'},
                   {value:'nome', label:'Jogador'},
@@ -153,7 +165,7 @@ export function Dashboard() {
 <Grid item xs={12}>
   
 
-  <Paper sx={{bgcolor:'#010A13', margin:'25px', borderRadius:'15px 15px 0 0'}} margin={6}  width='95%' marginLeft={10} elevate={5}>
+  <Paper sx={{bgcolor:'#010A13', marginTop:'50px', borderRadius:'15px 15px 0 0'}}  width='100%' marginLeft={10} elevate={5}>
   <Box widht='100%' backgroundColor='#0A323C' borderRadius='15px 15px 0 0' textAlign='center' ><Typography  variant='h3' component='h3'>Campeões</Typography></Box>
     <Box display='flex'>
       <Grid >
@@ -180,7 +192,7 @@ export function Dashboard() {
 
 </Grid>
 
-
+<Box textAlign={'center'} color='#F0E6D2'marginTop={2} ><Typography variant='h6' component='h6'>Orgulhosamente criado por Ethyenene Lins e Lucas Aguiar   |  Unicarioca 2022   |   Orientação Professor Mestre André Cotelli do Espírito Santo</Typography></Box>
 
 
 
